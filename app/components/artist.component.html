@@ -1,0 +1,13 @@
+<div *ngIf="artist">
+  <h2>{{artist.name}}</h2>
+  <img *ngIf="artist.image" [src]="artist.image">
+  <div class="mbid"><label>Musicbrainz: </label><a [href]="'http://musicbrainz.org/artist/'+artist.id">{{artist.id}}</a></div>
+  <div *ngIf="artist.dbpedia_uri" class="mbid"><label>Dbpedia: </label><a [href]="artist.dbpedia_uri">{{ artist.dbpedia_uri }}</a></div>
+  <div class="abstract"> {{ artist.abstract }}
+    <br><div *ngIf="artist.wikipedia_uri"><a [href]="artist.wikipedia_uri">Continue reading at Wikipedia..</a></div>
+  </div>
+  <div *ngFor="let cat of categories">
+    {{ cat.uri }}
+  </div>
+  <button (click)="goBack()">Back</button>
+</div>

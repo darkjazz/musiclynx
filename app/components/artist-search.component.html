@@ -1,0 +1,14 @@
+<div id="search-component">
+  <h4>Artist Search</h4>
+  <input #searchBox id="search-box" (keyup)="suggest(searchBox.value)" />
+  <button (click)="search(searchBox.value)">Search</button>
+  <div>
+    <ul class="artists">
+      <li *ngFor="let artist of artists"
+        [class.selected]="artist === selectedArtist"
+        (click)="gotoDetail(artist)">
+        <span class="badge">{{artist.name}}</span> {{artist.disambiguation}}
+      </li>
+    </ul>
+  </div>
+</div>
