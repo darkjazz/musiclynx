@@ -1,0 +1,16 @@
+{
+  "name": "musiclynx-server",
+  "version": "0.1.0",
+  "description": "musiclynx expressjs server component",
+  "main": "musiclynx-server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.14.0",
+    "query_builder": "file:modules/queryBuilder.js",
+    "queries": "file:modules/queries.js"
+  }
+}
