@@ -6,8 +6,21 @@
   <div class="abstract"> {{ artist.abstract }}
     <br><div *ngIf="artist.wikipedia_uri"><a [href]="artist.wikipedia_uri">Continue reading at Wikipedia..</a></div>
   </div>
-  <div *ngFor="let cat of categories">
-    {{ cat.uri }}
-  </div>
+  <category-links *ngIf="associated_artists"
+    [setCategory]="associated_artists"
+    [setArtist]="artist">
+  </category-links>
+  <category-links *ngFor="let category of categories"
+    [setCategory]="category"
+    [setArtist]="artist">
+  </category-links>
+  <category-links *ngFor="let category of ab_categories"
+    [setCategory]="category"
+    [setArtist]="artist">
+  </category-links>
+  <category-links *ngIf="mood_category"
+    [setCategory]="mood_category"
+    [setArtist]="artist">
+  </category-links>
   <button (click)="goBack()">Back</button>
 </div>

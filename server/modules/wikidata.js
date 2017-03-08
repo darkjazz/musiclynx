@@ -48,18 +48,19 @@ module_wd.get('/get_reduced_image/:mbid', function(req, res, next) {
   var mbid = req.params.mbid;
   if (fs.existsSync(uris.dest_dir + mbid + '.jpg')) {
     console.log("sending local uri: " + uris.dest_dir + mbid + '.jpg');
-    res.send(uris.dest_dir + mbid + '.jpg');
+    res.send({ local_uri: uris.dest_dir + mbid + '.jpg' });
   }
   else
   {
-    params = [ { "MBID": mbid } ];
+    params = { MBID: mbid };
     query = qb.buildQuery("image_by_mbid", params);
     var options = { method: 'GET', uri: uris.wikidata_uri + "sparql?query=" + encodeURIComponent(query) + "&format=json" };
     request(options, function(err, response, body) {
-      var wd_file_id, wd_file_name, img_uri, img;
+      var wd_file_id, wd_file_name, img_uri, img, wd_entity_id;
       var json = JSON.parse(body);
       if (json.results.bindings.length == 1) {
         wd_file_id = json.results.bindings[0].image_uri.value;
+        wd_entity_id = json.results.bindings[0].entity_id.value;
         wd_file_name = wd_file_id.split("/").slice(-1)[0];
         getImageUri(wd_file_name, function(error, img_uri) {
           if (error) res.send(error);
@@ -68,7 +69,7 @@ module_wd.get('/get_reduced_image/:mbid', function(req, res, next) {
             var save_name = uris.dest_dir + mbid + "." + filename.split(".").slice(-1)[0].toLowerCase();
             console.log("reducing " + filename + " to " + save_name);
             images(filename).size(max_size).save(save_name);
-            res.send(save_name);
+            res.send({ local_uri: save_name, original_uri: img_uri, entity_id: wd_entity_id });
           });
         });
       }
@@ -78,7 +79,7 @@ module_wd.get('/get_reduced_image/:mbid', function(req, res, next) {
 
 module_wd.get('/get_mbid_by_entityid/:entity_id', function(req, res) {
   var options, params, query, entity_id = req.params.entity_id;
-  params = [ { "ENTITYID": entity_id } ];
+  params = { ENTITYID: entity_id };
   query = qb.buildQuery("mbid_by_entityid", params);
   options = { method: 'GET', uri: uris.wikidata_uri + "sparql?query=" + encodeURIComponent(query) + "&format=json" };
   request(options, function(err, response, body) {

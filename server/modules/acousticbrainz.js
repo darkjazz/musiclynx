@@ -1,26 +1,43 @@
 var express = require('express');
-var couch = require('node-couchdb');
+var Couch = require('node-couchdb');
 
+const couch = new Couch();
 const dbName = "js_div_db";
 const max_links = 30;
 
-/*
-const startkey = ["Ann"];
-const endKey = ["George"];
-const viewUrl = "_design/list/_views/by_firstname";
+var module_ab = express.Router();
 
-const queryOptions = {
-    startkey,
-    endkey
-};
-
-couch.get(dbName, viewUrl, queryOptions).then(({data, headers, status}) => {
-    // data is json response
-    // headers is an object with all response headers
-    // status is statusCode number
-}, err => {
-    // either request error occured
-    // ...or err.code=EDOCMISSING if document is missing
-    // ...or err.code=EUNKNOWN if statusCode is unexpected
+module_ab.get('/get_artist/:id', function(req, res) {
+  var id = req.params.id;
+  couch.get(dbName, '_design/views/_view/id_exists', { key: id, group: true }).then((cdbr) => {
+    res.send(cdbr)
+  }, err => {
+    if (err.code == "EDOCMISSING") {
+      res.send({ error: "NOT FOUND" });
+    }
+    else {
+      res.send({ error: err });
+    }
+  });
 });
-*/
+
+module_ab.get('/get_similar_artists/:id', function(req, res) {
+  var id = req.params.id;
+  couch.get(dbName, '_design/views/_view/all_by_mbid', { 'key': id }).then((cdbr) => {
+    var features = { id: id };
+    cdbr.data.rows.forEach(function(row) {
+      var top = row.value.values.slice(0, max_links);
+      features[row.value.type] = top;
+    });
+    res.send(features);
+  }, err => {
+    if (err.code == "EDOCMISSING") {
+      res.send({ error: "NOT FOUND" });
+    }
+    else {
+      res.send({ error: err });
+    }
+  })
+});
+
+module.exports = module_ab;

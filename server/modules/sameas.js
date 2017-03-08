@@ -3,6 +3,7 @@ var request = require('request');
 var fsm = require('fuzzy-string-matching');
 var qb = require('./query_builder');
 var uris = require('./uris').uris;
+var b64 = require('base-64');
 
 var module_sa = express.Router();
 
@@ -20,7 +21,6 @@ var findBestMatch = function(duplicates, name) {
       }
     }
   });
-  console.log(best_match);
   if (!best_match.includes(uris.dbpedia_resource)) {
     best_match = uris.dbpedia_resource + name.replace(new RegExp(" ", 'g'), "_");
   }
@@ -28,7 +28,13 @@ var findBestMatch = function(duplicates, name) {
 };
 
 var findMBID = function(duplicates) {
-
+  var match="";
+  duplicates.forEach(function(uri) {
+    if (uri.search(uris.bbc_artists) > -1) {
+      match = uri.split("/").slice(-1)[0];
+    }
+  });
+  return match;
 };
 
 module_sa.get('/', function(req, res) {
@@ -46,14 +52,51 @@ module_sa.get('/find_dbpedia_link/:mbid/:name', function(req, res) {
   });
 });
 
-module_sa.get('/find_musicbrainz_id/:artist_uri', function(req, res) {
-  var artist_uri = req.params.artist_uri;
+module_sa.get('/find_musicbrainz_id/:artist_uri/:name', function(req, res) {
+  var artist_uri = b64.decode(req.params.artist_uri);
+  var name = req.params.name;
   request({ method: 'GET', uri: uris.sameas + 'json?uri=' + artist_uri }, function(err, response, body)
   {
     var json = JSON.parse(body);
-    console.log(json[0]);
-    var match = findMBID(json[0]["duplicates"])
-    res.send(match);
+    var match = findMBID(json[0]["duplicates"]);
+    if (match) {
+      var artist = {
+        name: decodeURIComponent(name),
+        id: match,
+        dbpedia_uri: artist_uri
+      }
+      res.send(artist);
+    }
+    else {
+      if (json.uri) {
+        var entity_id = json.uri.split("/").slice(-1)[0];
+        request({ method: 'GET', uri: uris.server + '/api/wikidata/get_mbid_by_entityid/' + entity_id }, function(err, response, body) {
+          var wd = JSON.parse(body);
+          var wd_artist = {
+            id: wd['mbid'],
+            name: name,
+            entity_id: entity_id,
+            dbpedia_uri: artist_uri
+          };
+          res.send(artist);
+        })
+      }
+      else {
+        request({ method: 'GET', uri: uris.server + '/api/musicbrainz/artist_search/' + name }, function(err, response, body) {
+          var json = JSON.parse(body);
+          console.log(json);
+          if (json["artists"].length > 0 && json["artists"][0].score == 100) {
+            var artist = {
+              id: json["artists"][0].id,
+              name: json["artists"][0].name,
+              score: 100,
+              dbpedia_uri: artist_uri
+            };
+            res.send(artist);
+          }
+        });
+      }
+    }
   });
 })
 

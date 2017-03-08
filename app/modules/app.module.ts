@@ -12,10 +12,11 @@ import { AppRoutingModule, routedComponents }     from './routing.module';
 import { ArtistService }        from '../services/artist.service';
 import { MusicBrainzService }   from '../services/musicbrainz.service';
 import { ArtistSearchComponent } from '../components/artist-search.component'
+import { CategoryComponent }    from  '../components/category.component'
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, AppRoutingModule, HttpModule, InMemoryWebApiModule.forRoot(InMemoryDataService, { passThruUnknownUrl: true }) ],
-  declarations: [ AppComponent, ArtistSearchComponent, routedComponents ],
+  declarations: [ AppComponent, ArtistSearchComponent, CategoryComponent, routedComponents ],
   providers:    [ ArtistService, MusicBrainzService ],
   bootstrap:    [ AppComponent ]
 })

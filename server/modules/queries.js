@@ -1,19 +1,3 @@
-const PREFIXES = `
-PREFIX p: <http://www.wikidata.org/prop/>
-PREFIX ps: <http://www.wikidata.org/prop/statement/>
-PREFIX wd: <http://www.wikidata.org/entity/>
-PREFIX dbpo: <http://dbpedia.org/ontology/>
-PREFIX dbpp: <http://dbpedia.org/property/>
-PREFIX dbpr: <http://dbpedia.org/resource/>
-PREFIX mo: <http://purl.org/ontology/mo/>
-PREFIX mood: <http://sovarr.c4dm.eecs.qmul.ac.uk/moodplay/>
-PREFIX foaf: <http://xmlns.com/foaf/0.1/>
-PREFIX mo: <http://purl.org/ontology/mo/>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX owl: <http://www.w3.org/2002/07/owl#>
-`;
-
 const IMAGE_BY_MBID = `
 SELECT ?entity_id ?image_uri WHERE {
   ?statement ps:P434 "%MBID" .
@@ -42,26 +26,117 @@ SELECT DISTINCT ?about ?abs ?dbpedia_uri WHERE {
   }
   FILTER( LANG(?abs)="%LANG" || LANG(?abs)="") .
 }
-`
+`;
+
+const ASSOCIATED_ARTISTS = `
+SELECT DISTINCT ?dbpedia_uri ?name WHERE {
+ { ?dbpedia_uri dbpo:associatedMusicalArtist <%URI> }
+ UNION
+ { ?dbpedia_uri dbpo:associatedBand <%URI> }
+ ?dbpedia_uri rdfs:label ?name .
+ FILTER( LANG(?name)="%LANG" || LANG(?name)="") .
+}
+`;
 
 const ARTIST_CATEGORIES = `
 SELECT DISTINCT ?yago WHERE {
- dbpr:%URI a ?yago .
+ <%URI> a ?yago .
 FILTER(REGEX(STR(?yago),"http://dbpedia.org/class/yago/Wikicat"))
+FILTER(?yago != <http://dbpedia.org/class/yago/WikicatLivingPeople>)
+FILTER(?yago != <http://dbpedia.org/class/yago/WikicatWomen>)
 }
-`
+`;
+
+const WIKICAT_LINKS = `
+SELECT DISTINCT ?uri ?name WHERE {
+ ?uri a <%YAGO_URI> ;
+   foaf:name ?name .
+ { ?uri a dbpo:Band } UNION { ?uri a dbpo:MusicArtist } UNION { ?uri a dbp-yago:Composer109947232 }
+
+ FILTER(?uri != <%ARTIST_URI>) .
+} LIMIT %LIMIT
+`;
 
 const MBID_BY_ENTITYID = `
 SELECT ?mbid WHERE {
   ?statement ps:P434 ?mbid .
   wd:%ENTITYID p:P434 ?statement .
 }
+`;
+
+const MOODPLAY_ARTISTS = `
+SELECT ?artist ?mbid
+WHERE
+{
+  SELECT ?artist ?mbid (AVG(?valence) as ?avg_valence) (AVG(?arousal) as ?avg_arousal) ((ABS(AVG(?target_valence)-AVG(?valence)) + ABS(AVG(?target_arousal)-AVG(?arousal))) / 2 as ?diff)
+  WHERE {
+    {
+      SELECT ?target_valence ?target_arousal
+      WHERE {
+      	?target_coords mood:valence ?target_valence ;
+          mood:arousal ?target_arousal ;
+          mood:configuration mood:actfold4 .
+        ?target_lfmid mood:coordinates ?target_coords ;
+          mood:artist_name ?target_artist .
+        FILTER(LCASE(?target_artist) = LCASE("%ARTIST"))
+      }
+    }
+    ?coords mood:valence ?valence ;
+      mood:arousal ?arousal ;
+      mood:configuration mood:actfold4 .
+    ?lfmid mood:coordinates ?coords ;
+      foaf:maker ?maker ;
+      mood:artist_name ?artist .
+    ?maker mo:musicbrainz_guid ?mbid .
+    FILTER(LCASE(?artist) != LCASE("%ARTIST"))
+  } GROUP BY ?artist ?mbid ORDER BY ?diff
+} LIMIT %LIMIT
+`;
+
+CONSTRUCT_ARTIST = `
+CONSTRUCT {
+   <%URI> dbpo:abstract ?abstract ;
+      dbpo:wikiPageRedirects ?dbpedia_uri ;
+      dbpo:about ?about ;
+      foaf:name ?name ;
+      a ?wikicat .
+}
+WHERE {
+  {
+    SELECT ?about ?abstract ?dbpedia_uri ?name ?wikicat WHERE {
+      <%URI> dbpo:wikiPageRedirects ?dbpedia_uri .
+      ?dbpedia_uri a ?wikicat ;
+        foaf:isPrimaryTopicOf ?about ;
+        foaf:name ?name ;
+        dbpo:abstract ?abstract .
+    }
+  }
+  UNION
+  {
+    SELECT ?about ?abstract ?dbpedia_uri ?name ?wikicat WHERE {
+      <%URI> a ?wikicat ;
+        foaf:isPrimaryTopicOf ?about ;
+        foaf:name ?name ;
+        dbpo:abstract ?abstract .
+      BIND(<%URI> as ?dbpedia_uri)
+    }
+  }
+
+  FILTER(REGEX(STR(?wikicat),"http://dbpedia.org/class/yago/Wikicat"))
+  FILTER(?wikicat != <http://dbpedia.org/class/yago/WikicatLivingPeople>)
+  FILTER(?wikicat != <http://dbpedia.org/class/yago/WikicatWomen>)
+  FILTER( LANG(?abstract)="en" || LANG(?abstract)="")
+  FILTER( LANG(?name)="%LANG" || LANG(?name)="" )
+}
 `
 
 module.exports.queries = {
-  "prefixes": PREFIXES,
   "image_by_mbid": IMAGE_BY_MBID,
   "artist_abstract": ARTIST_ABSTRACT,
+  "associated_artists": ASSOCIATED_ARTISTS,
   "mbid_by_entityid": MBID_BY_ENTITYID,
-  "artist_categories": ARTIST_CATEGORIES
+  "artist_categories": ARTIST_CATEGORIES,
+  "wikicat_links": WIKICAT_LINKS,
+  "moodplay_artists": MOODPLAY_ARTISTS,
+  "construct_artist": CONSTRUCT_ARTIST
 }

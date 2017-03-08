@@ -11,6 +11,7 @@ h2, h3 {
   font-weight: lighter;
 }
 body {
+  background-color: #333;
   margin: 2em;
 }
 /* #enddocregion quickstart */
