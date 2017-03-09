@@ -101,6 +101,10 @@ module_dbp.get('/construct_artist/:mbid/:name', function(req, res) {
       .timeout(defaultTimeout)
       .asJson()
       .then(function(r) {
+        artist = {}
+        if (results.bindings.length > 0) {
+          
+        }
         res.send(r);
       })
       .catch(function(e) { res.send(e) });

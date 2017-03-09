@@ -51,8 +51,7 @@ const WIKICAT_LINKS = `
 SELECT DISTINCT ?uri ?name WHERE {
  ?uri a <%YAGO_URI> ;
    foaf:name ?name .
- { ?uri a dbpo:Band } UNION { ?uri a dbpo:MusicArtist } UNION { ?uri a dbp-yago:Composer109947232 }
-
+ { ?uri a dbpo:Band } UNION { ?uri a dbpo:MusicArtist } UNION { ?uri a dbp-yago:Composer109947232 } UNION { ?uri a yago:Musician110340312 }
  FILTER(?uri != <%ARTIST_URI>) .
 } LIMIT %LIMIT
 `;
