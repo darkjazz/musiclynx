@@ -1,12 +1,12 @@
 var cors = require('cors')
 var express = require('express');
 var bodyParser = require('body-parser');
-var av = require('./modules/validator');
-var uris = require('./modules/uris').uris;
+var av = require('./modules/models/validator');
+var uris = require('./modules/models/uris').uris;
 var CouchDB = require('node-couchdb');
 var fs = require('fs');
 var dt = require('date-and-time');
-var prefixes = require('./modules/prefixes').prefixes;
+var prefixes = require('./modules/models/prefixes').prefixes;
 
 const dbName = "musiclynx_artists";
 
@@ -19,13 +19,13 @@ const couch = new CouchDB();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/api/musicbrainz', require('./modules/musicbrainz'));
-app.use('/api/dbpedia', require('./modules/dbpedia'));
-app.use('/api/wikidata', require('./modules/wikidata'));
-app.use('/api/sameas', require('./modules/sameas'));
-app.use('/api/acousticbrainz', require('./modules/acousticbrainz'));
-app.use('/api/moodplay', require('./modules/moodplay'));
-app.use('/api/youtube', require('./modules/youtube'));
+app.use('/musicbrainz', require('./modules/api/musicbrainz'));
+app.use('/dbpedia', require('./modules/api/dbpedia'));
+app.use('/wikidata', require('./modules/api/wikidata'));
+app.use('/sameas', require('./modules/api/sameas'));
+app.use('/acousticbrainz', require('./modules/api/acousticbrainz'));
+app.use('/moodplay', require('./modules/api/moodplay'));
+app.use('/youtube', require('./modules/api/youtube'));
 
 app.get('/', function (req, res) {
   res.send('MusicLynx Server Root..')

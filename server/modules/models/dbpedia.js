@@ -3,19 +3,12 @@ var request = require('request');
 var qb = require('./query_builder');
 var dps = require('dbpedia-sparql-client').default;
 var uris = require('./uris').uris;
-var b64 = require('base-64');
-
-var module_dbp = express.Router();
+var sameas = require('./sameas');
 
 var defaultTimeout = 8000;
 
-module_dbp.get('/', function(req, res) {
-  console.log('Dbpedia module root')
-});
-
-module_dbp.get('/get_artist_abstract/:mbid/:name', function(req, res) {
-  var uri = uris.server + '/api/sameas/find_dbpedia_link/' + req.params.mbid + '/' + req.params.name;
-  request( { method: 'GET', uri: uri }, function(err, response, body) {
+module.exports.get_artist_abstract = function(mbid, name, cb) {
+  sameas.find_dbpedia_link(mbid, name, function(body) {
     var query, params;
     var dbpedia_uri = body;
     params = { URI: dbpedia_uri, LANG: "en" };
@@ -32,15 +25,15 @@ module_dbp.get('/get_artist_abstract/:mbid/:name', function(req, res) {
           about: r.results.bindings[0].about.value,
           abstract: r.results.bindings[0].abs.value,
           dbpedia_uri: dbpedia_uri };
-        res.send(json);
+        cb(json);
       })
-      .catch(function(e) { res.send(e) });
+      .catch(function(e) { cb(e) });
   })
-});
+}
 
-module_dbp.get('/get_associated_artists/:dbpedia_uri', function(req, res) {
+module.exports.get_associated_artists = function(dbpedia_uri, cb) {
   var query, params;
-  params = { URI: b64.decode(req.params.dbpedia_uri), LANG: "en" };
+  params = { URI: dbpedia_uri, LANG: "en" };
   query = qb.buildQuery("associated_artists", params);
   dps.client()
     .query(query)
@@ -53,14 +46,14 @@ module_dbp.get('/get_associated_artists/:dbpedia_uri', function(req, res) {
           artists.push({ dbpedia_uri: artist.dbpedia_uri.value, name: artist.name.value  })
         });
       }
-      res.send(artists);
+      cb(artists);
     })
-    .catch(function(e) { res.send(e) });
-});
+    .catch(function(e) { cb(e) });
+}
 
-module_dbp.get('/get_categories/:dbpedia_uri', function(req, res) {
+module.exports.get_categories = function(dbpedia_uri, cb) {
   var query, params;
-  params = { URI: b64.decode(req.params.dbpedia_uri) };
+  params = { URI: dbpedia_uri };
   query = qb.buildQuery("artist_categories", params);
   console.log(query);
   dps.client()
@@ -68,30 +61,27 @@ module_dbp.get('/get_categories/:dbpedia_uri', function(req, res) {
     .timeout(defaultTimeout)
     .asJson()
     .then(function(r) {
-      res.send(r.results.bindings)
+      cb(r.results.bindings)
     })
-    .catch(function(e) { res.send(e) });
-});
+    .catch(function(e) { cb(e) });
+}
 
-module_dbp.get('/get_category_links/:yago_uri/:artist_uri/:limit', function(req, res) {
+module.exports.get_category_links = function(yago_uri, artist_uri, limit, cb) {
   var query, params;
-  params = { YAGO_URI: b64.decode(req.params.yago_uri),
-    ARTIST_URI: b64.decode(req.params.artist_uri),
-    LIMIT: req.params.limit };
+  params = { YAGO_URI: yago_uri, ARTIST_URI: artist_uri, LIMIT: limit };
   query = qb.buildQuery("wikicat_links", params);
   dps.client()
     .query(query)
     .timeout(defaultTimeout)
     .asJson()
     .then(function(r) {
-      res.send(r.results.bindings)
+      cb(r.results.bindings)
     })
-    .catch(function(e) { res.send(e) });
-});
+    .catch(function(e) { cb(e) });
+}
 
-module_dbp.get('/construct_artist/:mbid/:name', function(req, res) {
-  var uri = uris.server + '/api/sameas/find_dbpedia_link/' + req.params.mbid + '/' + req.params.name;
-  request( { method: 'GET', uri: uri }, function(err, response, body) {
+module.exports.construct_artist = function(mbid, name, cb) {
+  sameas.find_dbpedia_link(mbid, name, function(body) {
     var query, params;
     var dbpedia_uri = body;
     params = { URI: dbpedia_uri, LANG: "en" };
@@ -103,12 +93,10 @@ module_dbp.get('/construct_artist/:mbid/:name', function(req, res) {
       .then(function(r) {
         artist = {}
         if (results.bindings.length > 0) {
-          
-        }
-        res.send(r);
-      })
-      .catch(function(e) { res.send(e) });
-  })
-});
 
-module.exports = module_dbp;
+        }
+        cb(r);
+      })
+      .catch(function(e) { cb(e) });
+  })
+}
