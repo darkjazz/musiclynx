@@ -3,11 +3,12 @@ var fsm = require('fuzzy-string-matching');
 var qb = require('./query_builder');
 var uris = require('./uris').uris;
 var b64 = require('base-64');
+var wd = require('./wikidata');
+var mb = require('./musicbrainz');
 
 var findBestMatch = function(duplicates, name) {
   var best_match, high_score;
   best_match = duplicates[0];
-  console.log(best_match);
   high_score = fsm(uris.dbpedia_resource + name.replace(" ", "_"), best_match.replace("_(musician)", ""));
   duplicates.forEach(function(uri) {
     if (uri.search(uris.dbpedia_resource) > -1) {
@@ -34,7 +35,7 @@ var findMBID = function(duplicates) {
   return match;
 }
 
-module.exports.find_dbpedia_link = function(artist_name, mbid, cb) {
+module.exports.find_dbpedia_link = function(mbid, artist_name, cb) {
   var query = uris.bbc_artists + mbid + '#artist';
   request({ method: 'GET', uri: uris.sameas + 'json?uri=' + query }, function(err, response, body)
   {
@@ -52,7 +53,7 @@ module.exports.find_musicbrainz_id = function(artist_uri, name, cb) {
     if (match) {
       var artist = {
         name: decodeURIComponent(name),
-        id: match,
+        id: match.split('#')[0],
         dbpedia_uri: artist_uri
       }
       cb(artist);
@@ -60,10 +61,9 @@ module.exports.find_musicbrainz_id = function(artist_uri, name, cb) {
     else {
       if (json.uri) {
         var entity_id = json.uri.split("/").slice(-1)[0];
-        request({ method: 'GET', uri: uris.server + '/api/wikidata/get_mbid_by_entityid/' + entity_id }, function(err, response, body) {
-          var wd = JSON.parse(body);
+        wd.get_mbid_by_entityid(entity_id, function(mbid) {
           var wd_artist = {
-            id: wd['mbid'],
+            id: mbid['mbid'],
             name: name,
             entity_id: entity_id,
             dbpedia_uri: artist_uri
@@ -72,7 +72,7 @@ module.exports.find_musicbrainz_id = function(artist_uri, name, cb) {
         })
       }
       else {
-        request({ method: 'GET', uri: uris.server + '/api/musicbrainz/artist_search/' + name }, function(err, response, body) {
+        mb.artist_search(name, function(body) {
           var json = JSON.parse(body);
           console.log(json);
           if (json["artists"].length > 0 && json["artists"][0].score == 100) {

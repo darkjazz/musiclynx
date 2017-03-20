@@ -11,6 +11,7 @@ module.exports.get_artist_abstract = function(mbid, name, cb) {
   sameas.find_dbpedia_link(mbid, name, function(body) {
     var query, params;
     var dbpedia_uri = body;
+    console.log(dbpedia_uri);
     params = { URI: dbpedia_uri, LANG: "en" };
     query = qb.buildQuery("artist_abstract", params);
     dps.client()
