@@ -4,7 +4,7 @@ var ml = require('../models/musiclynx');
 var module_ml = express.Router();
 
 module_ml.get('/', function(req, res) {
-  console.log('MusicLynx module root')
+  console.log('MusicLynx module root');
 });
 
 module_ml.get('/artist/:id', function (req, res) {
