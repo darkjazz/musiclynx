@@ -13,11 +13,8 @@ In order to start the Angular app serving on localhost:3000, navigate in command
 npm start
 ```
 
-The server component can be accessed in the ./server subdirectory of the project and started typing the following in the command line terminal:
-```
-node musiclynx-server.js
-```
+The server component can be cloned from https://github.com/darkjazz/musiclynx-server
 
 ## License
 
-You touch it, you die!
+You touch it, you die! All rights reserved in other words.
