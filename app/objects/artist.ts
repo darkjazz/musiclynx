@@ -16,11 +16,11 @@ export class Artist {
 }
 
 export const ArtistMap = {
-  name: "rdfs:label",
+  name: "foaf:name",
   disambiguation: "rdfs:comment",
   original_image: "mo:image",
   abstract: "dbpo:abstract",
-  dbpedia_uri: "dbpr:resource",
+  dbpedia_uri: "owl:sameAs",
   wikipedia_uri: "foaf:isPrimaryTopicOf",
   entity_id: "wd:entity",
   types: "rdf:type",

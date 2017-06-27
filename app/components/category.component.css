@@ -1,0 +1,31 @@
+.contain-category{
+  width: 200px;
+  margin-bottom: 10px;
+  float: left;
+  border: 1px solid #999;
+  margin-right: 20px;
+}
+
+.header{
+  background: #999;
+  color: #ddd;
+  text-transform: capitalize;
+  font-size: small;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+.header:hover{
+  cursor: pointer;
+}
+
+.list{
+  overflow-x: hidden;
+  overflow-y: scroll;
+  max-height: 200px;
+}
+
+.list_item:hover{
+  cursor: pointer;
+  background-color: #eee;
+}

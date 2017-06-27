@@ -3,7 +3,9 @@ import { ActivatedRoute, Params } from '@angular/router';
 
 import { Artist } from '../objects/artist';
 import { Category } from '../objects/category';
+import { Video } from '../objects/video';
 import { ArtistService } from '../services/artist.service';
+import { YouTubeService } from '../services/youtube.service';
 
 @Component({
   moduleId: module.id,
@@ -17,11 +19,14 @@ export class ArtistComponent implements OnInit {
   categories: Category[];
   ab_categories: Category[];
   mood_category: Category;
+  videos: Video[];
+  deezer_id: string;
   error: any;
   promises: Promise<any>[];
 
   constructor(
     private artistService: ArtistService,
+    private youTubeService: YouTubeService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -49,13 +54,14 @@ export class ArtistComponent implements OnInit {
         if (!artist.abstract) this.getProfile();
         if (artist.types && artist.types.length > 0) this.showCategories();
         else { if (artist.dbpedia_uri) this.getCategories(); }
+        if (artist.name) this.getVideos();
         if (artist.associated_artists && artist.associated_artists.length > 0) this.showAssociatedArtists();
         if (artist.dbpedia_uri && (!artist.associated_artists || artist.associated_artists.length == 0))
           this.getAssociatedArtists();
         if (artist.id) this.getAcousticbrainzCategories();
         if (artist.name) this.getMoodplayLinks();
         Promise.all(this.promises).then(() => {
-          this.update();
+          // this.update();
         }).catch(reason => {
           console.log(reason)
         });
@@ -135,10 +141,22 @@ export class ArtistComponent implements OnInit {
   showCategories(): void {
     var artist_categories = new Array()
     this.artist.types.forEach(function(link) {
-      var label = link.replace("Wikicat", "").split("/").slice(-1)[0].replace(/([A-Z])/g, ' $1');
+      var label = link.replace("Wikicat", "").split("/").slice(-1)[0].replace(/([A-Z0-9]+)/g, ' $1');
       artist_categories.push({ dbpedia_uri: link, label: label });
     });
     this.categories = artist_categories;
+  }
+
+  getVideos(): void {
+    this.youTubeService.getVideos(this.artist.name)
+      .then(response => {
+        this.videos = response;
+        this.deezer_id = "652";
+      })
+  }
+
+  getPlaylists(): void {
+
   }
 
   update(): void {

@@ -31,7 +31,7 @@ export class ArtistService {
 
   getCachedArtist(id: string): Promise<Artist> {
     var param = `/${ id }`;
-    return this.http.get(Config.server + '/artist' + param)
+    return this.http.get(Config.server + '/musiclynx/artist' + param)
       .toPromise()
       .then((res:Response) => {
         var artist_json = res.json();
@@ -54,7 +54,7 @@ export class ArtistService {
       .then((res:Response) => {
         var response = res.json();
         var artist = new Artist();
-        artist.image = "./server/" + response.local_uri;
+        artist.image = "./" + response.local_uri;
         if ("original_uri" in response) artist.original_image = response.original_uri;
         if ("entity_id" in response) artist.entity_id = response.entity_id;
         return artist;
@@ -67,11 +67,9 @@ export class ArtistService {
   // }
 
   public getAbstract(artist: Artist): Promise<Artist> {
-    // if (!artist.dbpedia_uri) {
-    //   artist = this.getDBPediaURI(artist);
-    // }
-    var params = `/${ artist.id }/${ artist.name }`;
-    var uri = Config.server + Config.dbpedia + '/get_artist_abstract' + params;
+    var encoded_uri = b64.encode(artist.dbpedia_uri);
+    var param = `/${ encoded_uri }`;
+    var uri = Config.server + Config.dbpedia + '/get_artist_abstract_directly' + param;
     return this.http.get(uri)
       .toPromise()
       .then((res:Response) => {
@@ -114,7 +112,8 @@ export class ArtistService {
         var links = [];
         if (json.length > 0) {
           json.forEach(function(row){
-            var label = row.yago.value.replace("Wikicat", "").split("/").slice(-1)[0].replace(/([A-Z])/g, ' $1');
+            var label = row.yago.value.replace("Wikicat", "").split("/").slice(-1)[0].replace(/([A-Z0-9]+)/g, ' $1');
+            console.log(label);
             links.push({ dbpedia_uri: row.yago.value, label: label });
           });
         }

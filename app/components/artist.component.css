@@ -30,3 +30,9 @@ button:disabled {
 .mbid{
   font-size: xx-small;
 }
+.artist_image{
+  display: inline-block;
+}
+.abstract{
+  display: inline-block;
+}

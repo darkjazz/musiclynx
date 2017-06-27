@@ -1,11 +1,13 @@
 <div *ngIf="artist">
   <h2>{{artist.name}}</h2>
-  <img *ngIf="artist.image" [src]="artist.image">
+  <div>
+    <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div>
+      <div class="abstract"> {{ artist.abstract }}
+      <div *ngIf="artist.wikipedia_uri"><a [href]="artist.wikipedia_uri">Continue reading at Wikipedia..</a></div>
+    </div>
+  </div>
   <div class="mbid"><label>Musicbrainz: </label><a [href]="'http://musicbrainz.org/artist/'+artist.id">{{artist.id}}</a></div>
   <div *ngIf="artist.dbpedia_uri" class="mbid"><label>Dbpedia: </label><a [href]="artist.dbpedia_uri">{{ artist.dbpedia_uri }}</a></div>
-  <div class="abstract"> {{ artist.abstract }}
-    <br><div *ngIf="artist.wikipedia_uri"><a [href]="artist.wikipedia_uri">Continue reading at Wikipedia..</a></div>
-  </div>
   <category-links *ngIf="associated_artists"
     [setCategory]="associated_artists"
     [setArtist]="artist">
@@ -22,5 +24,12 @@
     [setCategory]="mood_category"
     [setArtist]="artist">
   </category-links>
+  <youtube-videos *ngIf="videos"
+    [setArtist]="artist"
+    [setVideos]="videos">
+  </youtube-videos>
+  <deezer-playlist *ngIf="deezer_id"
+    [setArtist]="deezer_id">
+  </deezer-playlist>  
   <button (click)="goBack()">Back</button>
 </div>

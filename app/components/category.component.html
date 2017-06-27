@@ -1,0 +1,8 @@
+<div class="contain-category" *ngIf="getCategory">
+  <div class="header" (click)="getArtists()" >{{ getCategory.label }}</div>
+  <div class="list">
+    <div *ngFor="let artist_link of getCategory.artists" [@triggerState]="state">
+      <div class="list_item" (click)="redirect(artist_link)">{{ artist_link.name }}</div>
+    </div>
+  </div>
+</div>

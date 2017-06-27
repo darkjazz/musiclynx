@@ -7,7 +7,7 @@
       <li *ngFor="let artist of artists"
         [class.selected]="artist === selectedArtist"
         (click)="gotoDetail(artist)">
-        <span class="badge">{{artist.name}}</span> {{artist.disambiguation}}
+        <span class="badge">{{artist.name}}</span> {{artist.id}}
       </li>
     </ul>
   </div>

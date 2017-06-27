@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Artist } from '../objects/artist';
+import { Config } from '../objects/config';
 import 'rxjs/add/operator/toPromise';
-
-var SERVER_URI = "http://localhost:7757/";
 
 @Injectable()
 export class MusicBrainzService {
@@ -15,7 +14,7 @@ export class MusicBrainzService {
 
   getArtists(searchTerm: string): Promise<Artist[]> {
     searchTerm = encodeURIComponent(searchTerm);
-    this.url = SERVER_URI + `api/musicbrainz/artist_search/${ searchTerm }`;
+    this.url = Config.server + `/musicbrainz/artist_search/${ searchTerm }`;
     return this.http.request(this.url, { headers: this.headers })
       .toPromise()
       .then((res:Response) => {

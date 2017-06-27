@@ -27,6 +27,7 @@
     "@angular/router": "~3.3.0",
     "@types/xml2json": "^0.10.0",
     "angular-in-memory-web-api": "~0.2.0",
+    "angular2-youtube": "^0.3.9",
     "core-js": "^2.4.1",
     "os": "^0.1.1",
     "reflect-metadata": "^0.1.8",
