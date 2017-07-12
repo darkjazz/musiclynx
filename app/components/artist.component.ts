@@ -7,6 +7,8 @@ import { Video } from '../objects/video';
 import { ArtistService } from '../services/artist.service';
 import { YouTubeService } from '../services/youtube.service';
 
+const MAX_ARTISTS = 30;
+
 @Component({
   moduleId: module.id,
   selector: 'artist-detail',
@@ -19,6 +21,7 @@ export class ArtistComponent implements OnInit {
   categories: Category[];
   ab_categories: Category[];
   mood_category: Category;
+  lastfm_category: Category;
   videos: Video[];
   deezer_id: string;
   error: any;
@@ -60,6 +63,7 @@ export class ArtistComponent implements OnInit {
           this.getAssociatedArtists();
         if (artist.id) this.getAcousticbrainzCategories();
         if (artist.name) this.getMoodplayLinks();
+        if (artist.id && artist.name) this.getLastFMLinks();
         Promise.all(this.promises).then(() => {
           // this.update();
         }).catch(reason => {
@@ -124,9 +128,16 @@ export class ArtistComponent implements OnInit {
   }
 
   getMoodplayLinks(): void {
-    this.artistService.getMoodplayLinks(this.artist)
+    this.artistService.getMoodplayLinks(this.artist, MAX_ARTISTS)
       .then(response => {
         if (response.label) this.mood_category = response;
+      });
+  }
+
+  getLastFMLinks(): void {
+    this.artistService.getLastFMLinks(this.artist)
+      .then(response => {
+        if (response.label) this.lastfm_category = response;
       });
   }
 

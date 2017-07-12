@@ -5,5 +5,6 @@ export const Config = {
   mb: "/musicbrainz",
   sameas: "/sameas",
   acousticbrainz: "/acousticbrainz",
-  moodplay: "/moodplay"
+  moodplay: "/moodplay",
+  lastfm: "/lastfm"  
 }

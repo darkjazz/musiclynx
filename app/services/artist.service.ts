@@ -172,16 +172,35 @@ export class ArtistService {
       .catch(this.handleError);
   }
 
-  public getMoodplayLinks(artist: Artist): Promise<Category> {
+  public getMoodplayLinks(artist: Artist, limit: Number): Promise<Category> {
     var name = encodeURIComponent(artist.name);
-    var param = `/${ name }`;
-    return this.http.get(Config.server + Config.moodplay + '/get_similar_artists' + param)
+    var params = `/${ name }/${ limit }`;
+    return this.http.get(Config.server + Config.moodplay + '/get_similar_artists' + params)
       .toPromise()
       .then((res:Response) => {
         var json = res.json();
         var category = new Category();
         if (json.length > 0) {
             category.label = "Moodplay Similar Artists";
+            category.parent = artist;
+            category.artists = json;
+        }
+        return category;
+      })
+      .catch(this.handleError);
+  }
+
+  public getLastFMLinks(artist: Artist): Promise<Category> {
+    var name = encodeURIComponent(artist.name);
+    var id = artist.id;
+    var params = `/${ id }/${ name }`;
+    return this.http.get(Config.server + Config.lastfm + '/get_similar_artists' + params)
+      .toPromise()
+      .then((res:Response) => {
+        var json = res.json();
+        var category = new Category();
+        if (json.length > 0) {
+            category.label = "Last.FM Similar Artists";
             category.parent = artist;
             category.artists = json;
         }
