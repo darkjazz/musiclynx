@@ -1,5 +1,6 @@
 .contain-category{
   width: 200px;
+  height: 200px;
   margin-bottom: 10px;
   float: left;
   border: 1px solid #999;
@@ -9,20 +10,20 @@
 .header{
   background: #999;
   color: #ddd;
-  text-transform: capitalize;
-  font-size: small;
-  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 8pt;
   padding: 5px;
-}
-
-.header:hover{
-  cursor: pointer;
+  min-height: 30px;
 }
 
 .list{
   overflow-x: hidden;
   overflow-y: scroll;
-  max-height: 200px;
+  height: 160px;
+}
+
+.list_item {
+  font-size: 10pt;
 }
 
 .list_item:hover{

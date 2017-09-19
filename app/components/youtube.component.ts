@@ -31,6 +31,9 @@ export class YouTubeComponent {
   set setVideos(videos: Video[]) {
     this._videos = videos;
     this._current = videos[0];
+    console.log(videos[0].width + "X" + videos[0].height);
+    console.log(videos[0].link);
+    console.log(videos[0].title);
   }
 
 }

@@ -15,11 +15,11 @@ import { YouTubeService }       from '../services/youtube.service';
 import { ArtistSearchComponent } from '../components/artist-search.component';
 import { CategoryComponent }    from  '../components/category.component';
 import { YouTubeComponent }     from '../components/youtube.component';
-import { DeezerComponent }      from '../components/deezer.component';
+import { AudioComponent }      from '../components/audio.component';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, AppRoutingModule, HttpModule, InMemoryWebApiModule.forRoot(InMemoryDataService, { passThruUnknownUrl: true }) ],
-  declarations: [ AppComponent, ArtistSearchComponent, CategoryComponent, YouTubeComponent, DeezerComponent, routedComponents ],
+  declarations: [ AppComponent, ArtistSearchComponent, CategoryComponent, YouTubeComponent, AudioComponent, routedComponents ],
   providers:    [ ArtistService, MusicBrainzService, YouTubeService ],
   bootstrap:    [ AppComponent ]
 })
