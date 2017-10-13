@@ -1,3 +1,5 @@
+import { Category } from './category';
+
 export class Artist {
   id: string;
   name: string;
@@ -11,19 +13,6 @@ export class Artist {
   dbpedia_uri: string;
   wikipedia_uri: string;
   entity_id: string;
-  types: string[];
-  associated_artists: Artist[];
-}
-
-export const ArtistMap = {
-  name: "foaf:name",
-  disambiguation: "rdfs:comment",
-  original_image: "mo:image",
-  abstract: "dbpo:abstract",
-  dbpedia_uri: "owl:sameAs",
-  wikipedia_uri: "foaf:isPrimaryTopicOf",
-  entity_id: "wd:entity",
-  types: "rdf:type",
-  associated_artists: "dbpo:associatedMusicalArtist",
-  requests: "co:count"
+  categories: Category[];
+  associated_artists: Category;
 }

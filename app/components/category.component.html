@@ -1,8 +1,8 @@
 <div class="contain-category" *ngIf="getCategory">
   <div class="header">{{ getCategory.label }}</div>
   <div class="list">
-    <div *ngFor="let artist_link of getCategory.artists" >
-      <div class="list_item" (click)="redirect(artist_link)">{{ artist_link.name }}</div>
+    <div *ngFor="let artist of getCategory.artists" >
+      <div class="list_item" (click)="gotoDetail(artist)">{{ artist.name }}</div>
     </div>
   </div>
 </div>

@@ -5,7 +5,6 @@ import { Subject } from 'rxjs/Subject';
 
 import { MusicBrainzService } from '../services/musicbrainz.service';
 import { ArtistService } from '../services/artist.service';
-import { ArtistSearchService } from '../services/artist-search.service';
 import { Artist } from '../objects/artist';
 
 @Component({
@@ -13,7 +12,7 @@ import { Artist } from '../objects/artist';
   selector: 'artist-search',
   templateUrl: 'artist-search.component.html',
   styleUrls: ['artist-search.component.css'],
-  providers: [MusicBrainzService, ArtistService, ArtistSearchService]
+  providers: [MusicBrainzService, ArtistService]
 })
 export class ArtistSearchComponent {
   artists: Artist[];
@@ -22,14 +21,12 @@ export class ArtistSearchComponent {
   constructor(
     private musicbrainzService: MusicBrainzService,
     private artistService: ArtistService,
-    private artistSearchService: ArtistSearchService,
     private router: Router) { }
 
   search(term: string): void {
     // Push a search term into the observable stream.
-    console.log(term);
     this.artists = [];
-    this.artistSearchService.searchMusicLynxArtists(term)
+    this.musicbrainzService.getArtists(term)
       .then(artists => this.artists = artists)
       .catch(error => {
           // TODO: real error handling
@@ -41,10 +38,7 @@ export class ArtistSearchComponent {
   suggest(term: string): void { }
 
   gotoDetail(artist: Artist): void {
-    this.artistService.updateArtist(artist)
-      .then(() => {
-        let link = ['/artist', artist.id];
-        this.router.navigate(link);
-      })
+    let link = ['/artist', artist.id, artist.name];
+    this.router.navigate(link);
   }
 }

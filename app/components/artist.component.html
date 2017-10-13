@@ -8,11 +8,11 @@
   </div>
   <div class="mbid"><label>Musicbrainz: </label><a [href]="'http://musicbrainz.org/artist/'+artist.id">{{artist.id}}</a></div>
   <div *ngIf="artist.dbpedia_uri" class="mbid"><label>Dbpedia: </label><a [href]="artist.dbpedia_uri">{{ artist.dbpedia_uri }}</a></div>
-  <category-links *ngIf="associated_artists"
-    [setCategory]="associated_artists"
+  <category-links *ngIf="artist.associated_artists"
+    [setCategory]="artist.associated_artists"
     [setArtist]="artist">
   </category-links>
-  <category-links *ngFor="let category of categories"
+  <category-links *ngFor="let category of artist.categories"
     [setCategory]="category"
     [setArtist]="artist">
   </category-links>

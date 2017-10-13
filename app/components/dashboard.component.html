@@ -1,7 +1,7 @@
 <h3>Featured Artists</h3>
 <div class="grid grid-pad">
   <div *ngFor="let artist of artists" (click)="gotoDetail(artist)" class="col-1-4">
-    <div class="module artist" [style.background]="'url(./static/reduced/' +  artist.id + '.jpg)'">
+    <div class="module artist" [style.background]="'url(./static/featured/' +  artist.id + '.jpg)'">
       <h4>{{ artist.name }}</h4>
     </div>
   </div>

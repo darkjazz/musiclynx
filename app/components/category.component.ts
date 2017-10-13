@@ -37,7 +37,7 @@ export class CategoryComponent implements OnInit {
   constructor(private artistService: ArtistService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getArtists();
+    if (!this._category.artists) this.getArtists();
   }
 
   @Input()
@@ -67,19 +67,18 @@ export class CategoryComponent implements OnInit {
     }
   }
 
-  redirect(artist: Artist): void {
-    if (!artist.id) {
-      this.artistService.getMusicbrainzID(artist)
-        .then(linked_artist => {
-          let link = ['/artist', linked_artist.id ];
-          this.router.navigate(link);
-        })
+  gotoDetail(artist: Artist): void {
+    var link;
+    if ("id" in artist) {
+      let link = ['/artist', artist.id, artist.name ];
+      this.router.navigate(link);
     }
     else
     {
-      let link = ['/artist', artist.id];
+      let link = ['/artist', artist.dbpedia_uri, artist.name ];
       this.router.navigate(link);
     }
+
   }
 
 }
