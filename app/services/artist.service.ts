@@ -21,6 +21,15 @@ export class ArtistService {
       .catch(this.handleError);
   }
 
+  getFeaturedArtists(): Promise<Artist[]> {
+    return this.http.get(Config.server + Config.artist + '/get_featured_artists')
+      .toPromise()
+      .then((res:Response) => {
+        return res.json() as Artist[];
+      })
+      .catch(this.handleError);
+  }
+
   getLocalArtist(id: string): Promise<Artist> {
     return this.getArtists().then(artists => artists.find(artist => artist.id === id))
   }

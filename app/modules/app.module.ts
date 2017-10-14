@@ -3,10 +3,7 @@ import { BrowserModule }        from '@angular/platform-browser';
 import { FormsModule }          from '@angular/forms';
 import { HttpModule }           from "@angular/http";
 
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService } from '../services/in-memory-data.service';
-
-import '../rxjs-extensions'
+// import '../rxjs-extensions'
 import { AppComponent }         from '../components/app.component';
 import { AppRoutingModule, routedComponents }     from './routing.module';
 import { ArtistService }        from '../services/artist.service';
@@ -18,7 +15,7 @@ import { YouTubeComponent }     from '../components/youtube.component';
 import { AudioComponent }      from '../components/audio.component';
 
 @NgModule({
-  imports:      [ BrowserModule, FormsModule, AppRoutingModule, HttpModule, InMemoryWebApiModule.forRoot(InMemoryDataService, { passThruUnknownUrl: true }) ],
+  imports:      [ BrowserModule, FormsModule, AppRoutingModule, HttpModule ],
   declarations: [ AppComponent, ArtistSearchComponent, CategoryComponent, YouTubeComponent, AudioComponent, routedComponents ],
   providers:    [ ArtistService, MusicBrainzService, YouTubeService ],
   bootstrap:    [ AppComponent ]

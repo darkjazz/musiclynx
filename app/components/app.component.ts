@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   moduleId: module.id,
-  selector: 'my-app',
+  selector: 'app-root',
   template: `
   <nav>
     <a routerLink="/dashboard" routerLinkActive="active">{{title}}</a>

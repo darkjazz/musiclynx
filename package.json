@@ -40,6 +40,7 @@
   "devDependencies": {
     "@angular/cli": "^1.4.7",
     "@types/jasmine": "^2.5.36",
+    "@types/js-base64": "^2.1.5",
     "@types/node": "^6.0.46",
     "@types/selenium-webdriver": "^2.53.33",
     "canonical-path": "0.0.2",

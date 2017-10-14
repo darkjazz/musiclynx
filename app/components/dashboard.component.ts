@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private artistService: ArtistService) { }
 
   ngOnInit(): void {
-    this.artistService.getArtists()
+    this.artistService.getFeaturedArtists()
       .then(artists => this.artists = artists);
   }
 
