@@ -1,3 +1,8 @@
+#header{
+  width: 100%;
+  display: block;
+}
+
 h1 {
   font-size: 1.2em;
   color: #999;
@@ -9,20 +14,29 @@ h2 {
   margin-top: 0;
   padding-top: 0;
 }
+nav{
+  width: 60%;
+  display: block;
+  float: left;
+}
 nav a {
+  font-family: 'Rock Salt', sans-serif;
+  font-size: 47px;
   padding: 5px 10px;
   text-decoration: none;
   margin-top: 10px;
   display: inline-block;
-  background-color: #eee;
+  background-color: #333;
   border-radius: 4px;
+  -webkit-transition: color .4s ease;
+  transition: color .4s ease;  
+
 }
 nav a:visited, a:link {
   color: #607D8B;
 }
 nav a:hover {
   color: #039be5;
-  background-color: #CFD8DC;
 }
 nav a.router-link-active {
   color: #039be5;

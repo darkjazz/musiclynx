@@ -42,11 +42,9 @@ export class ArtistService {
     var id = artist.id;
     var name = encodeURIComponent(artist.name);
     var params = `/${ id }/${ name }`;
-    console.log(Config.server + Config.artist + '/get_mb_artist' + params);
     return this.http.get(Config.server + Config.artist + '/get_mb_artist' + params)
       .toPromise()
       .then((res:Response) => {
-        console.log(res.json());
         return res.json() as Artist;
       })
       .catch(this.handleError);
@@ -56,11 +54,9 @@ export class ArtistService {
     var artist_uri = b64.encode(artist.dbpedia_uri);
     var name = encodeURIComponent(artist.name);
     var params = `/${ artist_uri }/${ name }`;
-    console.log(Config.server + Config.artist + '/get_dbp_artist' + params);
     return this.http.get(Config.server + Config.artist + '/get_dbp_artist' + params)
       .toPromise()
       .then((res:Response) => {
-        console.log(res.json());
         return res.json() as Artist;
       })
       .catch(this.handleError);

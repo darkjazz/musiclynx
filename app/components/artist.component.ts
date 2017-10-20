@@ -36,12 +36,10 @@ export class ArtistComponent implements OnInit {
         this.artist.name = params['name'];
         if (params['id'].search("http") == -1) {
           this.artist.id = params['id'];
-          console.log("Getting MusicBrainz artist");
           this.getMBArtist();
         }
         else {
           this.artist.dbpedia_uri = params['id'];
-          console.log("Getting Dbpedia artist");
           this.getDBPArtist();
         }
       }

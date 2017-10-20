@@ -1,9 +1,16 @@
+h2{
+  width: 100%;
+  text-align: left;
+  display: inline-block;
+}
+
 label {
   display: inline-block;
   margin: .5em 0;
   color: #607D8B;
   color: rgb(0,120,215);
   font-weight: bold;
+  padding-right: 3px;
 }
 input {
   height: 2em;
@@ -28,11 +35,24 @@ button:disabled {
   cursor: auto;
 }
 .mbid{
-  font-size: xx-small;
+  font-size: x-small;
 }
 .artist_image{
   display: inline-block;
 }
 .abstract{
   display: inline-block;
+}
+
+a{
+  -webkit-transition: color .4s ease;
+  transition: color .4s ease;
+}
+
+a:visited{
+  color: #4d6a79;
+}
+
+a:hover{
+  color: #039be5;
 }

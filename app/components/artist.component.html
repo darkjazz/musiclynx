@@ -7,6 +7,7 @@
     </div>
   </div>
   <div class="mbid"><label>Musicbrainz: </label><a [href]="'http://musicbrainz.org/artist/'+artist.id">{{artist.id}}</a></div>
+  <div class="mbid"><label>BBC artist page: </label><a [href]="'http://bbc.co.uk/music/artists/'+artist.id">{{artist.name}}</a></div>
   <div *ngIf="artist.dbpedia_uri" class="mbid"><label>Dbpedia: </label><a [href]="artist.dbpedia_uri">{{ artist.dbpedia_uri }}</a></div>
   <category-links *ngIf="artist.associated_artists"
     [setCategory]="artist.associated_artists"

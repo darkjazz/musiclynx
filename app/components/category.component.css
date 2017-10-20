@@ -1,10 +1,12 @@
 .contain-category{
   width: 200px;
   height: 200px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   float: left;
   border: 1px solid #999;
   margin-right: 20px;
+  /*border-bottom: 3px solid #999;*/
+  border-radius: 4pt;
 }
 
 .header{
@@ -19,14 +21,18 @@
 .list{
   overflow-x: hidden;
   overflow-y: scroll;
-  height: 160px;
+  height: 158px;
 }
 
 .list_item {
+  padding-left: 3px;
+  padding-bottom: 3px;
   font-size: 10pt;
+  -webkit-transition: background .4s ease;
+  transition: background .4s ease;
 }
 
 .list_item:hover{
   cursor: pointer;
-  background-color: #eee;
+  background-color: #ccc;
 }

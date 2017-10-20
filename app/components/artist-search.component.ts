@@ -4,41 +4,25 @@ import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
 import { MusicBrainzService } from '../services/musicbrainz.service';
-import { ArtistService } from '../services/artist.service';
-import { Artist } from '../objects/artist';
 
 @Component({
   moduleId: module.id,
   selector: 'artist-search',
   templateUrl: 'artist-search.component.html',
   styleUrls: ['artist-search.component.css'],
-  providers: [MusicBrainzService, ArtistService]
+  providers: [MusicBrainzService]
 })
 export class ArtistSearchComponent {
-  artists: Artist[];
-  private searchTerms = new Subject<string>();
 
   constructor(
     private musicbrainzService: MusicBrainzService,
-    private artistService: ArtistService,
     private router: Router) { }
 
   search(term: string): void {
-    // Push a search term into the observable stream.
-    this.artists = [];
-    this.musicbrainzService.getArtists(term)
-      .then(artists => this.artists = artists)
-      .catch(error => {
-          // TODO: real error handling
-          console.log(`Error in component ... ${error}`);
-          return [];
-        });
+    let link = ['/search', encodeURIComponent(term) ];
+    this.router.navigate(link);
   }
 
   suggest(term: string): void { }
 
-  gotoDetail(artist: Artist): void {
-    let link = ['/artist', artist.id, artist.name];
-    this.router.navigate(link);
-  }
 }

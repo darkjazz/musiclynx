@@ -15,6 +15,10 @@ npm start
 
 The server component can be cloned from https://github.com/darkjazz/musiclynx-server
 
+## Github pages deployment
+
+This branch is used for the static version development of MusicLynx. The built version is deployed to  Github pages: http://musiclynx.github.io
+
 ## License
 
 You touch it, you die! All rights reserved in other words.
