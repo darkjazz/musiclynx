@@ -15,5 +15,6 @@ cp ../musiclynx-static/app/objects/*.ts ./src/app/objects/
 cp ../musiclynx-static/app/services/*.ts ./src/app/services/
 cp ../musiclynx-static/app/services/artist.service.deploy ./src/app/services/artist.service.ts
 cp ../musiclynx-static/assets/featured/* ./src/assets/featured/
+cp ../musiclynx-static/assets/musiclynx-bg.png ./src/assets/
 cp ../musiclynx-static/styles.css ./src/
 ng build --prod

@@ -3,36 +3,41 @@
   height: 200px;
   margin-bottom: 20px;
   float: left;
-  border: 1px solid #999;
+  border: 1px solid #607D8B;
   margin-right: 20px;
   /*border-bottom: 3px solid #999;*/
   border-radius: 4pt;
 }
 
 .header{
-  background: #999;
+  background: #607D8B;
   color: #ddd;
   text-transform: uppercase;
   font-size: 8pt;
   padding: 5px;
   min-height: 30px;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
 }
 
 .list{
   overflow-x: hidden;
   overflow-y: scroll;
   height: 158px;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
 }
 
 .list_item {
   padding-left: 3px;
   padding-bottom: 3px;
   font-size: 10pt;
-  -webkit-transition: background .4s ease;
-  transition: background .4s ease;
+  color: #ddd;
+  -webkit-transition: background .4s ease, color .4s ease;
+  transition: background .4s ease, color .4s ease;
 }
 
 .list_item:hover{
   cursor: pointer;
-  background-color: #ccc;
+  background-color: #607D8B;
 }

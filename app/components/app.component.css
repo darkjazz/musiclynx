@@ -26,10 +26,10 @@ nav a {
   text-decoration: none;
   margin-top: 10px;
   display: inline-block;
-  background-color: #333;
+  background-color: transparent;
   border-radius: 4px;
   -webkit-transition: color .4s ease;
-  transition: color .4s ease;  
+  transition: color .4s ease;
 
 }
 nav a:visited, a:link {

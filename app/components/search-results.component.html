@@ -1,0 +1,11 @@
+<div id="search-results">
+  <h3 *ngIf="artists.length > 0">Search results for '{{ term }}'</h3>
+  <ul class="artists">
+    <li *ngFor="let artist of artists"
+      [class.selected]="artist === selectedArtist"
+      (click)="gotoDetail(artist)">
+      <span class="badge">{{artist.name}}</span> {{artist.id}}
+    </li>
+  </ul>
+  <div style="position:relative; top: 200px; right: 200px"><spinner *ngIf="showSpinner"></spinner></div>
+</div>

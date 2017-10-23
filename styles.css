@@ -11,8 +11,12 @@ h2, h3 {
   font-weight: lighter;
 }
 body {
-  background-color: #333;
+  background-color: #000;
   margin: 2em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-image: url("./assets/musiclynx-bg.png");
 }
 /* #enddocregion quickstart */
 body, input[text], button {

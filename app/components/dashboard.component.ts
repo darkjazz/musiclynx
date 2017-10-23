@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Config } from '../objects/config';
 
-import { Artist } from '../objects/artist'
-import { ArtistService } from '../services/artist.service'
+import { Artist } from '../objects/artist';
+import { ArtistService } from '../services/artist.service';
+import { Spinner } from './spinner.component';
 
 @Component({
   moduleId: module.id,
@@ -14,11 +15,15 @@ import { ArtistService } from '../services/artist.service'
 
 export class DashboardComponent implements OnInit {
   artists: Artist[] = [];
+  showSpinner: boolean = true;
   constructor(private router: Router, private artistService: ArtistService) { }
 
   ngOnInit(): void {
     this.artistService.getFeaturedArtists()
-      .then(artists => this.artists = artists);
+      .then(artists => {
+        this.artists = artists;
+        this.showSpinner = false;
+      });
   }
 
   gotoDetail(artist: Artist): void {

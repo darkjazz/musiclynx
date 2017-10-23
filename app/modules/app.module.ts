@@ -14,10 +14,11 @@ import { CategoryComponent }      from  '../components/category.component';
 import { YouTubeComponent }       from '../components/youtube.component';
 import { AudioComponent }         from '../components/audio.component';
 import { SearchResultsComponent } from '../components/search-results.component';
+import { Spinner }                from '../components/spinner.component';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, AppRoutingModule, HttpModule ],
-  declarations: [ AppComponent, ArtistSearchComponent, CategoryComponent, YouTubeComponent, AudioComponent, SearchResultsComponent, routedComponents ],
+  declarations: [ AppComponent, ArtistSearchComponent, CategoryComponent, YouTubeComponent, AudioComponent, SearchResultsComponent, Spinner, routedComponents ],
   providers:    [ ArtistService, MusicBrainzService, YouTubeService ],
   bootstrap:    [ AppComponent ]
 })

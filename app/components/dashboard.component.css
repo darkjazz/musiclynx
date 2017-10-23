@@ -43,10 +43,10 @@ h3 {
   font-size: 17px;
   opacity: 0.6;
   filter: alpha(opacity=60);
-  border: 1pt solid #000;
+  border: 1pt solid #aaa;
   border-radius: 4pt;
   -webkit-transition: opacity .4s ease, background .4s ease;
-  transition: opacity .4s ease, background .4s ease;  
+  transition: opacity .4s ease, background .4s ease;
 }
 h4 {
   position: relative;

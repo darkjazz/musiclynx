@@ -23,6 +23,7 @@ export class ArtistComponent implements OnInit {
   videos: Video[];
   deezer_id: string;
   error: any;
+  showSpinner: boolean;
 
   constructor(
     private artistService: ArtistService,
@@ -50,6 +51,7 @@ export class ArtistComponent implements OnInit {
   }
 
   getMBArtist(): void {
+    this.showSpinner = true;
     this.artistService.constructMusicbrainzArtist(this.artist).then(artist => {
       this.displayArtist(artist);
     }).catch(reason => {
@@ -58,6 +60,7 @@ export class ArtistComponent implements OnInit {
   }
 
   getDBPArtist(): void {
+    this.showSpinner = true;
     this.artistService.constructDbpediaArtist(this.artist).then(artist => {
       this.displayArtist(artist);
     }).catch(reason => {
@@ -66,6 +69,7 @@ export class ArtistComponent implements OnInit {
   }
 
   displayArtist(artist: Artist): void {
+    this.showSpinner = false;
     this.artist = artist;
     if (artist.id) this.getAcousticbrainzCategories();
     if (artist.name) this.getMoodplayLinks();
