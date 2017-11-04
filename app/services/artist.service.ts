@@ -158,6 +158,19 @@ export class ArtistService {
       .catch(this.handleError)
     }
 
+  public getDeezerArtistID(artist: Artist): Promise<Number> {
+    var term = encodeURIComponent(artist.name);
+    var param = `/${ term }`;
+    var uri = Config.server + Config.audio + '/get_deezer_id' + param;
+    return this.http.get(uri)
+      .toPromise()
+      .then((res:Response) => {
+        var json = res.json();
+        return json.id as Number;
+      })
+    .catch(this.handleError)
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);

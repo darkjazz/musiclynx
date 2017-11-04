@@ -42,6 +42,17 @@ button:disabled {
 }
 .abstract{
   display: inline-block;
+  margin-bottom: 23px;
+  width: 50%;
+  min-height: 101px;
+  max-height: 147px;
+  overflow-y: scroll;
+  padding: 5px;
+  border: 1px #444 solid;
+  border-radius: 4pt;
+  opacity: 0.8;
+  filter: alpha(opacity=80);
+  margin-left: -10px;
 }
 
 a{

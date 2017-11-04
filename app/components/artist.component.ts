@@ -73,6 +73,7 @@ export class ArtistComponent implements OnInit {
     this.artist = artist;
     if (artist.id) this.getAcousticbrainzCategories();
     if (artist.name) this.getMoodplayLinks();
+    if (artist.name) this.getDeezerID();
   }
 
   getImage(): void {
@@ -117,6 +118,13 @@ export class ArtistComponent implements OnInit {
     this.youTubeService.getVideos(this.artist.name)
       .then(response => {
         this.videos = response;
+      })
+  }
+
+  getDeezerID(): void {
+    this.artistService.getDeezerArtistID(this.artist)
+      .then(response => {
+        this.deezer_id = response.toString();
       })
   }
 

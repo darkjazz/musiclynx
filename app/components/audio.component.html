@@ -1,3 +1,7 @@
-<div *ngIf="_artist_id" id="deezer-player">
-  <iframe scrolling="no" frameborder="0" allowTransparency="true" [src]="_player_frame" width="400" height="350"></iframe>
+<div class="deezer-widget-player"
+  [attr.data-src]="_player_src"
+  data-scrolling="no"
+  data-frameborder="0"
+  data-allowTransparency="true"
+  [attr.data-width]="_player_width" [attr.data-height]="_player_height">
 </div>

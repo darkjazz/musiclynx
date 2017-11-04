@@ -3,16 +3,19 @@
   <div>
     <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div>
     <spinner *ngIf="showSpinner"></spinner>
-    <div class="abstract"> {{ artist.abstract }}</div>
+    <div *ngIf="artist.abstract" class="abstract"> {{ artist.abstract }}</div>
+    <div><label>Find {{ artist.name }} on </label></div>
     <ul class="links">
-      <li> <div><label>Find {{ artist.name }} on </label></div></li>
-      <li><div *ngIf="artist.wikipedia_uri"><a [href]="artist.wikipedia_uri"><img src="./assets/wikipedia-logo.png"></a></div></li>
-      <li><div *ngIf="artist.id" class="mbid"><a [href]="'http://musicbrainz.org/artist/'+artist.id"><img src="./assets/musicbrainz_logo.png"></a></div></li>
-      <li><div *ngIf="artist.dbpedia_uri" class="mbid"><a [href]="artist.dbpedia_uri"><img src="./assets/dbpedia_logo.png"></a></div></li>
-      <li><div *ngIf="artist.name" class="mbid"><a [href]="'https://www.youtube.com/results?search_query='+artist.name"><img src="./assets/youtube-logo.png"></a></div></li>
-      <li><div *ngIf="artist.id" class="mbid"><a [href]="'https://www.bbc.co.uk/music/artists/'+artist.id"><img src="./assets/bbc_music_logo.jpg"></a></div></li>
+      <li><div *ngIf="artist.wikipedia_uri"><a target="_blank" [href]="artist.wikipedia_uri"><img src="./assets/wiki.png"></a></div></li>
+      <li><div *ngIf="artist.id" class="mbid"><a target="_blank" [href]="'http://musicbrainz.org/artist/'+artist.id"><img src="./assets/musicbrainz.png"></a></div></li>
+      <li><div *ngIf="artist.dbpedia_uri" class="mbid"><a target="_blank" [href]="artist.dbpedia_uri"><img src="./assets/dbpedia.png"></a></div></li>
+      <li><div *ngIf="artist.name" class="mbid"><a target="_blank" [href]="'https://www.youtube.com/results?search_query='+artist.name"><img src="./assets/youtube.png"></a></div></li>
+      <li><div *ngIf="artist.id" class="mbid"><a target="_blank" [href]="'https://www.bbc.co.uk/music/artists/'+artist.id"><img src="./assets/bbc.jpg"></a></div></li>
     </ul>
   </div>
+  <deezer-playlist *ngIf="deezer_id"
+    [setArtist]="deezer_id">
+  </deezer-playlist>
   <category-links *ngIf="artist.associated_artists"
     [setCategory]="artist.associated_artists"
     [setArtist]="artist">
@@ -37,8 +40,5 @@
     [setArtist]="artist"
     [setVideos]="videos">
   </youtube-videos>
-  <deezer-playlist *ngIf="deezer_id"
-    [setArtist]="deezer_id">
-  </deezer-playlist>
   <!-- <button (click)="goBack()">Back</button> -->
 </div>
