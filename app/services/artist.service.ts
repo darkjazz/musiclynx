@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Artist } from '../objects/artist';
 import { Category } from '../objects/category';
+import { Track } from '../objects/track';
 import { Config } from '../objects/config';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
@@ -143,6 +144,19 @@ export class ArtistService {
       })
       .catch(this.handleError)
   }
+
+  public getDeezerPlaylist(artist: Artist): Promise<Track[]> {
+    var term = encodeURIComponent(artist.name);
+    var param = `/${ term }`;
+    var uri = Config.server + Config.audio + '/get_deezer_playlist';
+    return this.http.get(uri)
+      .toPromise()
+      .then((res:Response) => {
+        var playlist = res.json();
+        return playlist as Track[];
+      })
+      .catch(this.handleError)
+    }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);

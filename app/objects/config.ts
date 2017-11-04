@@ -7,5 +7,6 @@ export const Config = {
   acousticbrainz: "/acousticbrainz",
   moodplay: "/moodplay",
   lastfm: "/lastfm",
-  artist: "/artist"
+  artist: "/artist",
+  audio: "/audio"
 }

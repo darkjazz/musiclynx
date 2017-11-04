@@ -35,7 +35,7 @@ h3 {
 	color: #eee;
 	height: 120px;
 	width: 140px;
-	border-radius: 2px;
+	/*border-radius: 2px;*/
   background-size: cover !important;
   background-color: #000;
   -webkit-text-stroke-width: 1px;

@@ -6,7 +6,7 @@ h2{
 
 label {
   display: inline-block;
-  margin: .5em 0;
+  /*margin: .5em 0;*/
   color: #607D8B;
   color: rgb(0,120,215);
   font-weight: bold;
@@ -55,4 +55,35 @@ a:visited{
 
 a:hover{
   color: #039be5;
+}
+
+.links {
+  margin-left: -40px;
+  display: inline-block;
+  width: 100%;
+}
+
+.links li{
+  float: left;
+  display: block;
+  margin-right: 20px;
+}
+
+.links li img{
+  height: 67px;
+  opacity: 0.6;
+  filter: alpha(opacity=60);
+  border: 1pt solid #aaa;
+  border-radius: 4pt;
+  -webkit-transition: opacity .4s ease, background .4s ease;
+  transition: opacity .4s ease, background .4s ease;
+
+}
+
+.links li img:hover{
+  cursor: pointer;
+  color: #000;
+  -webkit-text-stroke-color: #fff;
+  opacity: 0.9;
+  filter: alpha(opacity=90);
 }
