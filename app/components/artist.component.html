@@ -4,6 +4,11 @@
     <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div>
     <spinner *ngIf="showSpinner"></spinner>
     <div *ngIf="artist.abstract" class="abstract"> {{ artist.abstract }}</div>
+    <div class="player">
+      <deezer-playlist *ngIf="deezer_id"
+        [setArtist]="deezer_id">
+      </deezer-playlist>
+    </div>
     <div><label>Find {{ artist.name }} on </label></div>
     <ul class="links">
       <li><div *ngIf="artist.wikipedia_uri"><a target="_blank" [href]="artist.wikipedia_uri"><img src="./assets/wiki.png"></a></div></li>
@@ -13,9 +18,6 @@
       <li><div *ngIf="artist.id" class="mbid"><a target="_blank" [href]="'https://www.bbc.co.uk/music/artists/'+artist.id"><img src="./assets/bbc.jpg"></a></div></li>
     </ul>
   </div>
-  <deezer-playlist *ngIf="deezer_id"
-    [setArtist]="deezer_id">
-  </deezer-playlist>
   <category-links *ngIf="artist.associated_artists"
     [setCategory]="artist.associated_artists"
     [setArtist]="artist">

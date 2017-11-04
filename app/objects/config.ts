@@ -10,6 +10,6 @@ export const Config = {
   artist: "/artist",
   audio: "/audio",
   deezer_player_uri: "https://www.deezer.com/plugins/player",
-  deezer_player_width: 300,
-  deezer_player_height: 300
+  deezer_player_width: "290",
+  deezer_player_height: "290"
 }

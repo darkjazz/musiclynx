@@ -55,6 +55,12 @@ button:disabled {
   margin-left: -10px;
 }
 
+.player{
+  display: inline-block;
+  width: 40%;
+  float: right;
+}
+
 a{
   -webkit-transition: color .4s ease;
   transition: color .4s ease;
@@ -71,13 +77,13 @@ a:hover{
 .links {
   margin-left: -40px;
   display: inline-block;
-  width: 100%;
+  width: 50%;
 }
 
 .links li{
   float: left;
   display: block;
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 .links li img{
