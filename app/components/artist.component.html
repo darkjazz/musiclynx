@@ -1,13 +1,13 @@
 <div *ngIf="artist">
   <h2>{{artist.name}}</h2>
   <div>
-    <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div>
     <spinner *ngIf="showSpinner"></spinner>
     <div *ngIf="artist.abstract" class="abstract"> {{ artist.abstract }}</div>
     <div class="player">
-      <deezer-playlist *ngIf="deezer_id"
+      <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div>
+      <!-- <deezer-playlist *ngIf="deezer_id"
         [setArtist]="deezer_id">
-      </deezer-playlist>
+      </deezer-playlist> -->
     </div>
     <div><label>Find {{ artist.name }} on </label></div>
     <ul class="links">

@@ -14,8 +14,8 @@ export class AudioComponent {
   private _artist_id: string;
   private _player_frame: SafeUrl;
   private _player_src: string;
-  private _player_width: Number;
-  private _player_height: Number;
+  private _player_width: string;
+  private _player_height: string;
   private _player_attributes: Object;
   error: any;
 
@@ -52,7 +52,7 @@ export class AudioComponent {
     player_uri = Config.deezer_player_uri + "?" + Object.keys(this._player_attributes).map((key)=>{
       return key + "=" + this._player_attributes[key];
     }).join("&");
-    this._player_src = this.sanitizer.bypassSecurityTrustResourceUrl(player_uri);
+    this._player_src = this.sanitizer.bypassSecurityTrustResourceUrl(player_uri).toString();
 
   }
 

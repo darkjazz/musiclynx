@@ -73,7 +73,7 @@ export class ArtistComponent implements OnInit {
     this.artist = artist;
     if (artist.id) this.getAcousticbrainzCategories();
     if (artist.name) this.getMoodplayLinks();
-    if (artist.name) this.getDeezerID();
+    // if (artist.name) this.getDeezerID();
   }
 
   getImage(): void {
