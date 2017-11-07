@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
-import { Artist } from '../objects/artist';
-import { Category } from '../objects/category';
-import { Video } from '../objects/video';
-import { ArtistService } from '../services/artist.service';
-import { YouTubeService } from '../services/youtube.service';
+import { Artist }         from '../objects/artist';
+import { Category }       from '../objects/category';
+import { Track }          from '../objects/track';
+import { ArtistService }  from '../services/artist.service';
+import { PlayerService }  from '../services/player.service';
+import { DeezerService }  from '../services/deezer.service';
 
 const MAX_ARTISTS = 30;
 
@@ -20,14 +21,19 @@ export class ArtistComponent implements OnInit {
   ab_categories: Category[];
   mood_category: Category;
   lastfm_category: Category;
-  videos: Video[];
   deezer_id: string;
   error: any;
   showSpinner: boolean;
+  tracks: Array<any>;
+  index:number;
+  isPlaying: boolean = false;
+  cover: string;
+  title: string;
 
   constructor(
     private artistService: ArtistService,
-    private youTubeService: YouTubeService,
+    private playerService: PlayerService,
+    private deezerService: DeezerService,
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -73,7 +79,7 @@ export class ArtistComponent implements OnInit {
     this.artist = artist;
     if (artist.id) this.getAcousticbrainzCategories();
     if (artist.name) this.getMoodplayLinks();
-    // if (artist.name) this.getDeezerID();
+    if (artist.name) this.getDeezerID();
   }
 
   getImage(): void {
@@ -106,29 +112,66 @@ export class ArtistComponent implements OnInit {
       });
   }
 
-  // showAssociatedArtists(): void {
-  //   this.associated_artists = {
-  //     label: "Associated Artists",
-  //     parent: this.artist,
-  //     artists: this.artist.associated_artists
-  //   } as Category;
-  // }
-  //
-  getVideos(): void {
-    this.youTubeService.getVideos(this.artist.name)
-      .then(response => {
-        this.videos = response;
-      })
-  }
-
   getDeezerID(): void {
     this.artistService.getDeezerArtistID(this.artist)
       .then(response => {
         this.deezer_id = response.toString();
+        this.deezerService.getTracks(this.deezer_id)
+          .subscribe(tracks => this.getTracks(tracks));
+        let event = this.playerService.playerEvents;
+        event.onEnd$
+          .subscribe(event$ => this.onEnd());
+        event.playing$
+          .subscribe(event$ => this.playing(event$));
       })
   }
 
   goBack(): void {
     window.history.back();
+  }
+
+  // --------------------- player methods ----------------------
+  getTracks(tracks):void {
+    this.tracks = tracks;
+    this.cover = tracks[0].cover_medium;
+    this.playerService.init(tracks);
+  }
+
+  selectTrack(i):void {
+    this.cover = tracks[i].cover_medium;
+    this.
+    this.playerService.playNew(i);
+    this.index = i;
+  }
+
+  play() {
+    this.playerService.play();
+  }
+
+  pause() {
+    this.playerService.pause();
+  }
+
+  stop() {
+    if(this.isPlaying) {
+        this.playerService.stop();
+    }
+  }
+
+  next() {
+    this.playerService.playNext();
+  }
+
+  previous() {
+    this.playerService.playPrevious();
+  }
+
+  playing(playing) {
+    this.isPlaying = playing;
+  }
+
+  onEnd() {
+    this.playerService.playNext();
+    this.index += 1;
   }
 }

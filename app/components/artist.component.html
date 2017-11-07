@@ -4,10 +4,18 @@
     <spinner *ngIf="showSpinner"></spinner>
     <div *ngIf="artist.abstract" class="abstract"> {{ artist.abstract }}</div>
     <div class="player">
-      <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div>
-      <!-- <deezer-playlist *ngIf="deezer_id"
-        [setArtist]="deezer_id">
-      </deezer-playlist> -->
+      <!-- <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div> -->
+      <player *ngIf="deezer_id"
+        [playing]="isPlaying"
+        [cover]="cover"
+        [title]="title"
+        (play)="play()"
+        (pause)="pause()"
+        (stop)="stop()"
+        (next)="next()"
+        (previous)="previous()"
+      >
+      </player>
     </div>
     <div><label>Find {{ artist.name }} on </label></div>
     <ul class="links">

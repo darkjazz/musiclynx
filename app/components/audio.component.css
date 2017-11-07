@@ -1,6 +1,100 @@
-#deezer-player{
-  width: 450px;
-  margin-bottom: 10px;
-  float: left;
-  border: 1px solid #999;
+:host {
+  /*position: absolute;
+  left: calc(50% - 124px);
+  bottom: 80px;
+  z-index: 40;*/
+  margin-top: -40px;
+}
+
+img{
+  width: 250px;
+  height: 250px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  margin-top: -40px;
+  margin-bottom: -8px;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 217px;
+  background-color: rgba(0,0,0,0.6);
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 17px;
+  padding-left: 17px;
+}
+
+.btn-group {
+  color: #FFAF07;
+  border-color: #FFAF07;
+}
+
+.btn {
+  color: inherit;
+  border-color: inherit;
+  border-radius: 0;
+  border-right-color: transparent;
+  border-left-color: transparent;
+
+  /*&:first-child {
+    border-left-color: inherit;
+  }
+
+  &:last-child {
+    border-right-color: inherit;
+  }
+
+  &:hover {
+    border-right-color: inherit;
+    border-left-color: inherit;
+  }*/
+}
+
+.btn {
+  height: 47px;
+  width: 47px;
+  background-color: transparent;
+  color: #FFAF07;
+  border-color: #FFAF07;
+  border-radius: 4pt;
+  font-size: 16pt;
+  /*-webkit-transition: box-shadow .2s ease;
+  transition: box-shadow .2s ease;*/
+
+  /*transition: border-width cubic-bezier(0.4, 0, 0.2, 1);
+  transition-delay: 0.2s;
+
+  &:hover {
+    box-shadow:0 0 0 1px #FFAF07;
+  }
+
+  &:focus:hover {
+    box-shadow:0 0 0 1px #FFAF07;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }*/
+}
+
+.btn:hover{
+  box-shadow:0 0 0 1px #FFAF07;
+}
+
+.btn:focus:hover{
+  box-shadow:0 0 0 1px #FFAF07;
+}
+
+.btn:focus{
+  box-shadow: none;
+}
+
+.title{
+  font-size: 10pt;
+  font-weight: normal;
+  color: #039be5;
 }

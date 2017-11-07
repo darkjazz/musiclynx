@@ -1,6 +1,32 @@
-<iframe
-  scrolling="no"
-  frameborder="0"
-  allowTransparency="true"
-  [attr.src]="_player_src" [attr.width]="_player_width" [attr.height]="_player_height">
-</iframe>
+<img [src]="cover">
+<div class="wrapper text-center">
+  <button class="btn"
+    (click)="previous.emit(null)"
+  >
+    <i class="fa fa-backward" aria-hidden="true">
+    </i>
+  </button>
+  <div class="btn-group">
+    <button class="btn"
+      (click)="togglePlay()"
+    >
+      <i class = "fa" aria-hidden="true"
+        [ngClass]="{'fa-play': !playing, 'fa-pause': playing}"
+        >
+      </i>
+    </button>
+    <button class="btn"
+      (click)="stop.emit(null)"
+    >
+      <i class="fa fa-stop" aria-hidden="true">
+      </i>
+    </button>
+  </div>
+  <button class="btn"
+    (click)="next.emit(null)"
+  >
+    <i class="fa fa-forward" aria-hidden="true">
+    </i>
+  </button>
+</div>
+<div *ngIf="title" class="title">Now playing <i>{{ title }}</i></div>
