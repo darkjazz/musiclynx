@@ -1,7 +1,7 @@
-<div *ngIf="artist">
+<spinner *ngIf="showSpinner"></spinner>
+<div *ngIf="!showSpinner">
   <h2>{{artist.name}}</h2>
   <div>
-    <spinner *ngIf="showSpinner"></spinner>
     <div *ngIf="artist.abstract" class="abstract"> {{ artist.abstract }}</div>
     <div class="player">
       <!-- <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div> -->

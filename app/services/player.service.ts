@@ -155,3 +155,9 @@ function pause(song:PlayListItem):PlayListItem {
   song.playing = false;
   return song;
 }
+
+function clear(): void {
+  let currentSong = playlist[index];
+  stop(currentSong);
+  
+}

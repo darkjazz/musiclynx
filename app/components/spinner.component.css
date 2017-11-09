@@ -1,3 +1,8 @@
+:host{
+	position: absolute;
+	left: 50%;
+	top: 200px;
+}
 
 .cssload-container{
 	position:relative;

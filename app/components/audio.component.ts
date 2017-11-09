@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 
 @Component({
   moduleId: module.id,
@@ -6,7 +6,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   templateUrl: 'audio.component.html',
   styleUrls: ['audio.component.css']
 })
-export class AudioComponent {
+export class AudioComponent implements OnDestroy {
   @Input() playing: boolean;
   @Input() cover: string;
   @Input() title: string;
@@ -22,5 +22,9 @@ export class AudioComponent {
     } else {
       this.play.emit(null);
     }
+  }
+
+  ngOnDestroy() {
+    this.stop.emit(null);
   }
 }

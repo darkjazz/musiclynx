@@ -138,8 +138,8 @@ export class ArtistComponent implements OnInit {
   }
 
   selectTrack(i):void {
-    this.cover = tracks[i].cover_medium;
-    this.
+    this.cover = this.tracks[i].cover_medium;
+    // this.title = tracks[i].title;
     this.playerService.playNew(i);
     this.index = i;
   }
