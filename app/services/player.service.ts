@@ -157,7 +157,6 @@ function pause(song:PlayListItem):PlayListItem {
 }
 
 function clear(): void {
-  let currentSong = playlist[index];
+  let currentSong = this.playlist[this.index];
   stop(currentSong);
-  
 }

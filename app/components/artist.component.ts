@@ -58,6 +58,7 @@ export class ArtistComponent implements OnInit {
 
   getMBArtist(): void {
     this.showSpinner = true;
+    this.cover = "./assets/deezer.png";
     this.artistService.constructMusicbrainzArtist(this.artist).then(artist => {
       this.displayArtist(artist);
     }).catch(reason => {
@@ -67,6 +68,7 @@ export class ArtistComponent implements OnInit {
 
   getDBPArtist(): void {
     this.showSpinner = true;
+    this.cover = "./assets/deezer.png";
     this.artistService.constructDbpediaArtist(this.artist).then(artist => {
       this.displayArtist(artist);
     }).catch(reason => {
@@ -132,9 +134,11 @@ export class ArtistComponent implements OnInit {
 
   // --------------------- player methods ----------------------
   getTracks(tracks):void {
-    this.tracks = tracks;
-    this.cover = tracks[0].cover_medium;
-    this.playerService.init(tracks);
+    if (tracks.length > 0) {
+      this.tracks = tracks;
+      this.cover = tracks[0].cover_medium;
+      this.playerService.init(tracks);
+    }
   }
 
   selectTrack(i):void {
