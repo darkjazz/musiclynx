@@ -20,6 +20,7 @@ import { Spinner } from './spinner.component';
 export class SearchResultsComponent implements OnInit {
   artists: Artist[];
   term: string;
+  showNoResults: boolean = false;
   private searchTerms = new Subject<string>();
   showSpinner: boolean = true;
 
@@ -37,7 +38,8 @@ export class SearchResultsComponent implements OnInit {
         this.musicbrainzService.getArtists(this.term)
           .then(artists => {
             this.showSpinner = false;
-            this.artists = artists;
+            if (artists.length == 0) this.showNoResults = true;
+            else this.artists = artists;
           })
           .catch(error => {
               // TODO: real error handling

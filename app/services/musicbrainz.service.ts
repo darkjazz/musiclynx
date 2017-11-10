@@ -25,11 +25,20 @@ export class MusicBrainzService {
           artist.id = item.id;
           artist.name = item.name;
           artist.score = +item.score;
-          artist.disambiguation = item.disambiguation ? item.disambiguation : "";
+          artist.disambiguation = item.disambiguation ? item.disambiguation : this.disambiguate(item);
           this.artists.push(artist);
         }
         return this.artists;
       }).catch(this.handleError);
+  }
+
+  disambiguate(artist:Object): string {
+    var items = Array<string>();
+    if (artist["type"]) items.push(artist["type"]);
+    if (artist["begin-area"]) items.push(artist["begin-area"]["name"]);
+    if (artist["area"]) items.push(artist["area"]["name"]);
+    if (artist["tags"]) artist["tags"].map(tag => items.push(tag["name"]));
+    return items.join(", ");
   }
 
   private handleError(error: any): Promise<any> {
