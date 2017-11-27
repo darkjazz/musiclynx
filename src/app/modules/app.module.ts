@@ -17,11 +17,10 @@ import { YouTubeComponent }       from '../components/youtube.component';
 import { AudioComponent }         from '../components/audio.component';
 import { SearchResultsComponent } from '../components/search-results.component';
 import { Spinner }                from '../components/spinner.component';
-import { GraphComponent }         from '../components/graph.component';
 
 @NgModule({
   imports:      [ BrowserModule, FormsModule, AppRoutingModule, HttpModule, JsonpModule ],
-  declarations: [ AppComponent, ArtistSearchComponent, CategoryComponent, YouTubeComponent, AudioComponent, SearchResultsComponent, Spinner, GraphComponent, routedComponents ],
+  declarations: [ AppComponent, ArtistSearchComponent, CategoryComponent, YouTubeComponent, AudioComponent, SearchResultsComponent, Spinner, routedComponents ],
   providers:    [ ArtistService, MusicBrainzService, YouTubeService, DeezerService, PlayerService ],
   bootstrap:    [ AppComponent ]
 })

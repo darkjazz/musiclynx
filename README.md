@@ -8,9 +8,9 @@ MusicLynx front-end is developed in [Angular2](https://angular.io), while the da
 
 ## Running MusicLynx
 
-In order to start the Angular app serving on localhost:3000, navigate in command line terminal to the project root directory and type:
+In order to start the Angular app serving on localhost:4200, install angular-cli, navigate in command line terminal to the project root directory and type:
 ```
-npm start
+ng serve
 ```
 
 The server component can be cloned from https://github.com/darkjazz/musiclynx-server

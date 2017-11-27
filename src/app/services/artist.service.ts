@@ -2,13 +2,12 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Artist } from '../objects/artist';
 import { Category } from '../objects/category';
-import { Track } from '../objects/track';
 import { Graph } from '../objects/graph';
 import { Config } from '../objects/config';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
-import * as b64 from 'base-64';
+import { Base64 as b64 } from 'js-base64';
 
 @Injectable()
 export class ArtistService {
@@ -145,19 +144,6 @@ export class ArtistService {
       })
       .catch(this.handleError)
   }
-
-  public getDeezerPlaylist(artist: Artist): Promise<Track[]> {
-    var term = encodeURIComponent(artist.name);
-    var param = `/${ term }`;
-    var uri = Config.server + Config.audio + '/get_deezer_playlist';
-    return this.http.get(uri)
-      .toPromise()
-      .then((res:Response) => {
-        var playlist = res.json();
-        return playlist as Track[];
-      })
-      .catch(this.handleError)
-    }
 
   public getDeezerArtistID(artist: Artist): Promise<Number> {
     var term = encodeURIComponent(artist.name);
