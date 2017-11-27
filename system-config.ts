@@ -30,7 +30,8 @@ System.config({
     'rxjs':                      'npm:rxjs',
     'angular-in-memory-web-api': 'npm:angular-in-memory-web-api/bundles/in-memory-web-api.umd.js',
     'base-64': 'npm:base-64/base64.js',
-    'howler': 'npm:howler/dist/howler.js'
+    'howler': 'npm:howler/dist/howler.js',
+    'd3': 'npm:d3/index.js'
   },
   // packages tells the System loader how to load when no filename and/or no extension
   packages: {

@@ -3,6 +3,7 @@ import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Artist } from '../objects/artist';
 import { Category } from '../objects/category';
 import { Track } from '../objects/track';
+import { Graph } from '../objects/graph';
 import { Config } from '../objects/config';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
@@ -167,6 +168,21 @@ export class ArtistService {
       .then((res:Response) => {
         var json = res.json();
         return json.id as Number;
+      })
+    .catch(this.handleError)
+  }
+
+  public getArtistGraph(artist: Artist): Promise<Graph> {
+    var dbpedia_uri = b64.encode(artist.dbpedia_uri);
+    var name = encodeURIComponent(artist.name);
+    var min_ranking = 3;
+    var params = `/${ dbpedia_uri }/${ name }/${ min_ranking }`;
+    var uri = Config.server + Config.dbpedia + '/get_artist_graph' + params;
+    return this.http.get(uri)
+      .toPromise()
+      .then((res:Response) => {
+        var json = res.json();
+        return json as Graph;
       })
     .catch(this.handleError)
   }
