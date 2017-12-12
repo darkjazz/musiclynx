@@ -1,5 +1,6 @@
 #!/bin/bash
-cp -r ../musiclynx-ng/dist/* ../musiclynx.github.io/
+ng build --prod
+cp -r ./dist/* ../musiclynx.github.io/
 cd ../musiclynx.github.io/
 git add .
 git add assets/.

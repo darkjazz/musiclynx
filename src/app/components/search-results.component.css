@@ -14,7 +14,7 @@ h3{
   border-bottom: 1px solid gray;
   border-left: 1px solid gray;
   border-right: 1px solid gray;
-  width:195px;
+  width: 501px;
   height: 20px;
   padding: 5px;
   background-color: white;
@@ -41,7 +41,7 @@ h3{
   height: 1.6em;
   border-radius: 4px;
   -webkit-transition: left .4s ease, color .4s ease, background .4s ease;
-  transition: left .4s ease, color .4s ease, background .4s ease;  
+  transition: left .4s ease, color .4s ease, background .4s ease;
 
 }
 .artists li.selected:hover {

@@ -9,6 +9,16 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 import { Base64 as b64 } from 'js-base64';
 
+const GRAPH_LIMIT = 73;
+
+const FILTER = {
+  ranking: 0,
+  jaccard: 1,
+  collaborative: 2,
+  sorensen: 3,
+  max_degree: 4
+}
+
 @Injectable()
 export class ArtistService {
   private artistsUrl = 'app/artists'
@@ -155,22 +165,25 @@ export class ArtistService {
         var json = res.json();
         return json.id as Number;
       })
-    .catch(this.handleError)
+      .catch(this.handleError)
   }
 
   public getArtistGraph(artist: Artist): Promise<Graph> {
     var dbpedia_uri = b64.encode(artist.dbpedia_uri);
     var name = encodeURIComponent(artist.name);
-    var min_ranking = 3;
-    var params = `/${ dbpedia_uri }/${ name }/${ min_ranking }`;
-    var uri = Config.server + Config.dbpedia + '/get_artist_graph' + params;
+    var id = artist.id;
+    var limit = GRAPH_LIMIT;
+    var filter = FILTER["max_degree"];
+    var degree = artist.categories.length;
+    var params = `/${ dbpedia_uri }/${ name }/${ id }/${ limit }/${ filter }/${ degree }`;
+    var uri = Config.server + Config.artist + '/get_artist_graph' + params;
+    console.log(uri);
     return this.http.get(uri)
       .toPromise()
       .then((res:Response) => {
-        var json = res.json();
-        return json as Graph;
+        return res.json() as Graph;
       })
-    .catch(this.handleError)
+      .catch(this.handleError)
   }
 
   private handleError(error: any): Promise<any> {

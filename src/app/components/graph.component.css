@@ -1,9 +1,20 @@
 .links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
+  stroke: #ffffff;
+  stroke-opacity: 1.0;
+  /*stroke-width: 3px;*/
 }
 
 .nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
+  stroke: #000;
+  stroke-width: 4px;
+}
+
+.show {
+  font-size: 10pt;
+  opacity: 0.9;
+}
+
+.hide{
+  font-size: 7.5pt;
+  opacity: 0.25;
 }
