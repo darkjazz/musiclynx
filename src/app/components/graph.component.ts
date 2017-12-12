@@ -79,7 +79,7 @@ export class GraphComponent implements OnInit {
       .data(this.graph.links)
       .enter().append("line")
       .attr("stroke-opacity", 0.4)
-      .attr("stroke-width", "3px");
+      .attr("stroke-width", "2px");
 
     this.node = this.svg.append("g")
       .selectAll("circle")
@@ -182,7 +182,15 @@ export class GraphComponent implements OnInit {
     this.showGroupLabel(selected);
     this.svg.selectAll("circle").filter(node => {
       return (node.group !== selected.group)
-    }).transition().duration(400).attr("opacity", 0.5);
+    }).transition().duration(400).attr("opacity", 0.3);
+    this.svg.selectAll("circle").filter(node => {
+      return (node.group == selected.group)
+    }).transition().duration(400)
+      .attr("stroke", "#fff")
+      .attr("stroke-width", "3px");
+    this.svg.selectAll("line").transition().duration(400)
+      .attr("stroke-opacity", 0.1)
+      .attr("stroke-width", "1px");
   }
 
   restoreGroup(unselected) {
@@ -191,7 +199,13 @@ export class GraphComponent implements OnInit {
     });
     this.hideLabel(label, unselected);
     this.hideGroupLabel()
-    this.svg.selectAll("circle").transition().duration(400).attr("opacity", 1.0);
+    this.svg.selectAll("circle").transition().duration(400)
+      .attr("stroke", "#666")
+      .attr("stroke-width", "1.5px")
+      .attr("opacity", 1.0);
+    this.svg.selectAll("line").transition().duration(400)
+      .attr("stroke-opacity", 0.4)
+      .attr("stroke-width", "2px");
   }
 
   showGroupLabel(node) {
