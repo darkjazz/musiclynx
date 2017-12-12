@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { Component, Input, OnInit, ViewChild, ElementRef, Renderer } from "@angular/core";
 import { Router } from '@angular/router';
 import { Artist } from "../objects/artist";
 import { Node, Link, Graph } from "../objects/graph";
@@ -12,10 +12,13 @@ import * as d3 from "d3";
   styleUrls: ['graph.component.css']
 })
 export class GraphComponent implements OnInit {
-  @ViewChild('graph')
-  private element: ElementRef;
+  @ViewChild('graph') private element: ElementRef;
   artist: Artist;
   graph: Graph;
+  groupName: string;
+  groupTop: string;
+  groupLeft: string;
+  groupColor: string;
   svg;
   simulation;
   width;
@@ -25,9 +28,8 @@ export class GraphComponent implements OnInit {
   color;
   radius;
   label;
-  grouplabel;
 
-  constructor(private artistService: ArtistService, private router: Router) { }
+  constructor(private artistService: ArtistService, private router: Router, public renderer: Renderer) { }
 
   @Input()
   set setArtist(artist: Artist) {
@@ -97,12 +99,12 @@ export class GraphComponent implements OnInit {
         .on("end", d => this.dragended(d))
       );
 
-    this.node.append("title")
-      .style("background-color", "#333")
-      .attr("opacity", 0.75)
-      .style("font-family", "Nunito")
-      .style("font-size", "8pt")
-      .text( d => this.getGroup(d) );
+    // this.node.append("title")
+    //   .style("background-color", "#333")
+    //   .style("font-family", "Nunito")
+    //   .style("font-size", "10pt")
+    //   .attr("opacity", 0.75)
+    //   .text( d => this.getGroup(d) );
 
     this.label = this.svg.selectAll(".label")
 			.data(this.graph.nodes)
@@ -118,17 +120,6 @@ export class GraphComponent implements OnInit {
       // .on("mouseover", d => this.showLabel(d3.select(d3.event.currentTarget)) )
       // .on("mouseout", d => this.hideLabel(d3.select(d3.event.currentTarget)) )
       .on("click", d => this.navigate(d) );
-
-      // this.grouplabel = this.svg.append("text")
-      //   .style("position", "absolute")
-      //   .style("visibility", "hidden")
-      //   .style("z-index", "10")
-      //   .style("font-family", "Nunito")
-      //   .style("font-size", "10pt")
-      //   .style("border", "1pt solid #aaa")
-      //   .style("border-radius", "4pt")
-      //   .style("background-color", "#333")
-      //   .attr("opacity", 0.9);
 
     this.simulation
         .nodes(this.graph.nodes)
@@ -188,7 +179,7 @@ export class GraphComponent implements OnInit {
       return (node["name"] == selected.name)
     });
     this.showLabel(label, selected);
-    // this.showGroupLabel(selected);
+    this.showGroupLabel(selected);
     this.svg.selectAll("circle").filter(node => {
       return (node.group !== selected.group)
     }).transition().duration(400).attr("opacity", 0.5);
@@ -199,27 +190,24 @@ export class GraphComponent implements OnInit {
       return (node["name"] == unselected.name)
     });
     this.hideLabel(label, unselected);
-    // this.hideGroupLabel()
+    this.hideGroupLabel()
     this.svg.selectAll("circle").transition().duration(400).attr("opacity", 1.0);
   }
 
   showGroupLabel(node) {
-    this.moveGroupLabel(node);
-    this.grouplabel.transition().duration(400)
-      .text(node.group)
-      .style("visibility", "visible");
+    this.groupName = node.group;
+    this.groupColor = this.color(node.group);
+
   }
 
   hideGroupLabel() {
-    this.grouplabel.transition().duration(400)
-      .style("visibility", "hidden");
+    this.groupName = "";
   }
 
-  moveGroupLabel(node) {
-    this.grouplabel.transition().duration(200)
-      .style("top", (node.y+20)+"px")
-      .style("left",(node.x+20)+"px");
-  }
+  // moveGroupLabel(node) {
+  //   this.groupTop = (this.getY(node)+20)+"px";
+  //   this.groupLeft = (this.getX(node)+20)+"px";
+  // }
 
   dragstarted(d) {
     if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();

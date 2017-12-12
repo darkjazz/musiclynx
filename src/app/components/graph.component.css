@@ -18,3 +18,17 @@
   font-size: 7.5pt;
   opacity: 0.25;
 }
+
+.grouplabel {
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  z-index: 10;
+  font-family: "Nunito";
+  font-size: 10pt;
+  border: 1pt solid #aaa;
+  border-radius: 4pt;
+  background-color: #333;
+  opacity: 0.9;
+  padding: 10px;
+}

@@ -1,1 +1,10 @@
 <svg width="960" height="960" #graph></svg>
+<div
+  *ngIf="groupName"
+  class="grouplabel"
+  [style.top]="groupTop"
+  [style.left]="groupLeft"
+  [style.color]="groupColor"
+  >
+    {{ groupName }}
+  </div>
