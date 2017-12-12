@@ -25,6 +25,7 @@ export class GraphComponent implements OnInit {
   color;
   radius;
   label;
+  grouplabel;
 
   constructor(private artistService: ArtistService, private router: Router) { }
 
@@ -111,11 +112,23 @@ export class GraphComponent implements OnInit {
 	    .style("fill", "#555")
 	    .style("font-family", "Nunito")
       .style("font-size", "5pt")
+      .style("pointer-events", "none")
       .attr("opacity", 0.35)
       .attr("cursor", "pointer")
-      .on("mouseover", d => this.showLabel() )
-      .on("mouseout", d => this.hideLabel() )
+      // .on("mouseover", d => this.showLabel(d3.select(d3.event.currentTarget)) )
+      // .on("mouseout", d => this.hideLabel(d3.select(d3.event.currentTarget)) )
       .on("click", d => this.navigate(d) );
+
+      // this.grouplabel = this.svg.append("text")
+      //   .style("position", "absolute")
+      //   .style("visibility", "hidden")
+      //   .style("z-index", "10")
+      //   .style("font-family", "Nunito")
+      //   .style("font-size", "10pt")
+      //   .style("border", "1pt solid #aaa")
+      //   .style("border-radius", "4pt")
+      //   .style("background-color", "#333")
+      //   .attr("opacity", 0.9);
 
     this.simulation
         .nodes(this.graph.nodes)
@@ -152,8 +165,8 @@ export class GraphComponent implements OnInit {
     return d.y;
   }
 
-  showLabel() {
-    d3.select(d3.event.currentTarget).transition().duration(400)
+  showLabel(selected, node) {
+    selected.transition().duration(400)
       .style("font-size", "16pt")
       .style("fill", "#ddd")
       .style("-webkit-text-stroke-width", "1px")
@@ -161,8 +174,8 @@ export class GraphComponent implements OnInit {
       .attr("opacity", 0.9);
   }
 
-  hideLabel() {
-    d3.select(d3.event.currentTarget).transition().duration(400)
+  hideLabel(selected, node) {
+    selected.transition().duration(400)
       .style("font-size", "6pt")
       .style("fill", "#555")
       .style("-webkit-text-stroke-width", "0px")
@@ -171,13 +184,41 @@ export class GraphComponent implements OnInit {
   }
 
   highlightGroup(selected) {
+    var label = this.svg.selectAll("text").filter(node => {
+      return (node["name"] == selected.name)
+    });
+    this.showLabel(label, selected);
+    // this.showGroupLabel(selected);
     this.svg.selectAll("circle").filter(node => {
       return (node.group !== selected.group)
     }).transition().duration(400).attr("opacity", 0.5);
   }
 
   restoreGroup(unselected) {
-    this.svg.selectAll("circle").transition().duration(400).attr("opacity", 1.0)
+    var label = this.svg.selectAll("text").filter(node => {
+      return (node["name"] == unselected.name)
+    });
+    this.hideLabel(label, unselected);
+    // this.hideGroupLabel()
+    this.svg.selectAll("circle").transition().duration(400).attr("opacity", 1.0);
+  }
+
+  showGroupLabel(node) {
+    this.moveGroupLabel(node);
+    this.grouplabel.transition().duration(400)
+      .text(node.group)
+      .style("visibility", "visible");
+  }
+
+  hideGroupLabel() {
+    this.grouplabel.transition().duration(400)
+      .style("visibility", "hidden");
+  }
+
+  moveGroupLabel(node) {
+    this.grouplabel.transition().duration(200)
+      .style("top", (node.y+20)+"px")
+      .style("left",(node.x+20)+"px");
   }
 
   dragstarted(d) {
