@@ -5,6 +5,8 @@ import { Node, Link, Graph } from "../objects/graph";
 import { ArtistService } from '../services/artist.service';
 import * as d3 from "d3";
 
+const TRNS = 300;
+
 @Component({
   moduleId: module.id,
   selector: 'artist-graph',
@@ -157,7 +159,7 @@ export class GraphComponent implements OnInit {
   }
 
   showLabel(selected, node) {
-    selected.transition().duration(400)
+    selected.transition().duration(TRNS)
       .style("font-size", "16pt")
       .style("fill", "#ddd")
       .style("-webkit-text-stroke-width", "1px")
@@ -166,7 +168,7 @@ export class GraphComponent implements OnInit {
   }
 
   hideLabel(selected, node) {
-    selected.transition().duration(400)
+    selected.transition().duration(TRNS)
       .style("font-size", "6pt")
       .style("fill", "#555")
       .style("-webkit-text-stroke-width", "0px")
@@ -182,13 +184,13 @@ export class GraphComponent implements OnInit {
     this.showGroupLabel(selected);
     this.svg.selectAll("circle").filter(node => {
       return (node.group !== selected.group)
-    }).transition().duration(400).attr("opacity", 0.3);
+    }).transition().duration(TRNS).attr("opacity", 0.3);
     this.svg.selectAll("circle").filter(node => {
       return (node.group == selected.group)
-    }).transition().duration(400)
+    }).transition().duration(TRNS)
       .attr("stroke", "#fff")
       .attr("stroke-width", "3px");
-    this.svg.selectAll("line").transition().duration(400)
+    this.svg.selectAll("line").transition().duration(TRNS)
       .attr("stroke-opacity", 0.1)
       .attr("stroke-width", "1px");
   }
@@ -199,11 +201,11 @@ export class GraphComponent implements OnInit {
     });
     this.hideLabel(label, unselected);
     this.hideGroupLabel()
-    this.svg.selectAll("circle").transition().duration(400)
+    this.svg.selectAll("circle")
       .attr("stroke", "#666")
       .attr("stroke-width", "1.5px")
       .attr("opacity", 1.0);
-    this.svg.selectAll("line").transition().duration(400)
+    this.svg.selectAll("line")
       .attr("stroke-opacity", 0.4)
       .attr("stroke-width", "2px");
   }
