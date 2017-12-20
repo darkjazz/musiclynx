@@ -177,6 +177,7 @@ export class ArtistService {
     var degree = artist.categories.length;
     var params = `/${ dbpedia_uri }/${ name }/${ id }/${ limit }/${ filter }/${ degree }`;
     var uri = Config.server + Config.artist + '/get_artist_graph' + params;
+    console.log(uri);
     return this.http.get(uri)
       .toPromise()
       .then((res:Response) => {

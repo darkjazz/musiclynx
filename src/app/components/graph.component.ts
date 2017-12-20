@@ -5,7 +5,7 @@ import { Node, Link, Graph } from "../objects/graph";
 import { ArtistService } from '../services/artist.service';
 import * as d3 from "d3";
 
-const TRNS = 300;
+const TRNS = 50;
 
 @Component({
   moduleId: module.id,
