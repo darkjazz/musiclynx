@@ -16,7 +16,8 @@ const FILTER = {
   jaccard: 1,
   collaborative: 2,
   sorensen: 3,
-  max_degree: 4
+  max_degree: 4,
+  heat_prob: 5
 }
 
 @Injectable()
@@ -174,7 +175,11 @@ export class ArtistService {
     var id = artist.id;
     var limit = GRAPH_LIMIT;
     var filter = FILTER["max_degree"];
-    var degree = artist.categories.length;
+    var degree;
+    if (artist.categories && artist.categories.length > 0)
+      degree = artist.categories.length;
+    else
+      degree = 0;
     var params = `/${ dbpedia_uri }/${ name }/${ id }/${ limit }/${ filter }/${ degree }`;
     var uri = Config.server + Config.artist + '/get_artist_graph' + params;
     console.log(uri);

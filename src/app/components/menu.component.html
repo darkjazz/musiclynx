@@ -1,0 +1,14 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav (keydown.escape)="close()">
+    <button mat-button *ngFor="let item of items" (click)="select(item.text)">
+      <mat-icon>{{ item.icon }}</mat-icon>
+      <span>{{ item.text }}</span>
+    </button>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <button #navbtn mat-icon-button (click)="open()">
+      <mat-icon class="menu_icon">menu</mat-icon>
+    </button>
+  </mat-sidenav-content>
+</mat-sidenav-container>

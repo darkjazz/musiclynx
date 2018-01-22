@@ -1,0 +1,39 @@
+mat-sidenav {
+  margin-left: 58px;
+  color: #666;
+  background-color: transparent;
+}
+
+mat-sidenav-container {
+  background-color: transparent !important;
+  width: 484px;
+}
+
+button {
+  background-color: transparent !important;
+  color: #666;
+  -webkit-transition: color .4s ease;
+  transition: color .4s ease;
+  &:hover {
+    color: #ddd;
+  }
+}
+
+.menu_icon{
+  font-size: 43px;
+}
+
+span{
+  text-transform:uppercase;
+}
+
+.overlay-panel {
+  color: #ddd;
+  display: block;
+  background: #000;
+  padding: 20px;
+  width: 60%;
+  opacity: 0.85;
+  border: 1pt solid #aaa;
+  border-radius: 4pt;
+}

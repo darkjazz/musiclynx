@@ -1,7 +1,7 @@
 #search-component{
   display: inline-block;
-  float: right;
-  width: 40%;
+  /* float: right; */
+  width: 350px;
   height: 132px;
 }
 

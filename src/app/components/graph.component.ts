@@ -5,7 +5,7 @@ import { Node, Link, Graph } from "../objects/graph";
 import { ArtistService } from '../services/artist.service';
 import * as d3 from "d3";
 
-const TRNS = 50;
+const TRNS = 200;
 
 @Component({
   moduleId: module.id,
@@ -113,9 +113,9 @@ export class GraphComponent implements OnInit {
 			.enter().append("text")
 	    .text( d => this.getName(d) )
 	    .style("text-anchor", "middle")
-	    .style("fill", "#555")
+	    .style("fill", "#000")
 	    .style("font-family", "Nunito")
-      .style("font-size", "5pt")
+      .style("font-size", "6pt")
       .style("pointer-events", "none")
       .attr("opacity", 0.35)
       .attr("cursor", "pointer")

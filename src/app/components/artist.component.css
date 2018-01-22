@@ -71,19 +71,6 @@ button:disabled {
   float: right;
 }
 
-a{
-  -webkit-transition: color .4s ease;
-  transition: color .4s ease;
-}
-
-a:visited{
-  color: #4d6a79;
-}
-
-a:hover{
-  color: #039be5;
-}
-
 .links {
   margin-left: -40px;
   display: inline-block;

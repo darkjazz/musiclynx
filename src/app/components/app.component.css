@@ -15,7 +15,7 @@ h2 {
   padding-top: 0;
 }
 nav{
-  width: 60%;
+  width: 55%;
   display: block;
   float: left;
 }
@@ -30,7 +30,7 @@ nav a {
   border-radius: 4px;
   -webkit-transition: color .4s ease;
   transition: color .4s ease;
-  
+
 }
 nav a:visited, a:link {
   color: #607D8B;
