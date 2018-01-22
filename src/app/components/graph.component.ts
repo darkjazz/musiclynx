@@ -15,6 +15,7 @@ const TRNS = 200;
 })
 export class GraphComponent implements OnInit {
   @ViewChild('graph') private element: ElementRef;
+  showSpinner: boolean;
   artist: Artist;
   graph: Graph;
   groupName: string;
@@ -39,6 +40,7 @@ export class GraphComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.hijackGroupLabel();
     this.getGraph();
   }
 
@@ -55,6 +57,7 @@ export class GraphComponent implements OnInit {
   getGraph() {
     this.artistService.getArtistGraph(this.artist)
       .then(graph => {
+        this.hideGroupLabel();
         this.graph = graph;
         if (!("error" in graph)) this.initialise();
         else d3.select(this.element.nativeElement).attr("height", 0);
@@ -213,11 +216,15 @@ export class GraphComponent implements OnInit {
   showGroupLabel(node) {
     this.groupName = node.group;
     this.groupColor = this.color(node.group);
-
   }
 
   hideGroupLabel() {
     this.groupName = "";
+  }
+
+  hijackGroupLabel() {
+    this.groupName = "Loading graph...";
+    this.groupColor = "#dddddd";
   }
 
   // moveGroupLabel(node) {
