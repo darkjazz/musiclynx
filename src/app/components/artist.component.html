@@ -26,30 +26,32 @@
       <li><div *ngIf="artist.id" class="mbid"><a target="_blank" [href]="'https://www.bbc.co.uk/music/artists/'+artist.id"><img src="./assets/bbc.jpg"></a></div></li>
     </ul>
   </div>
-  <artist-graph *ngIf="artist.dbpedia_uri"
+  <artist-graph *ngIf="showGraph()"
     [setArtist]="artist">
   </artist-graph>
-  <!-- <category-links *ngIf="artist.associated_artists"
-    [setCategory]="artist.associated_artists"
-    [setArtist]="artist">
-  </category-links>
-  <category-links *ngFor="let category of artist.categories"
-    [setCategory]="category"
-    [setArtist]="artist">
-  </category-links>
-  <category-links *ngFor="let category of ab_categories"
-    [setCategory]="category"
-    [setArtist]="artist">
-  </category-links>
-  <category-links *ngIf="mood_category"
-    [setCategory]="mood_category"
-    [setArtist]="artist">
-  </category-links>
-  <category-links *ngIf="lastfm_category"
-    [setCategory]="lastfm_category"
-    [setArtist]="artist">
-  </category-links>
-  <youtube-videos *ngIf="videos"
+  <div *ngIf="showGrid()">
+    <category-links *ngIf="artist.associated_artists"
+      [setCategory]="artist.associated_artists"
+      [setArtist]="artist">
+    </category-links>
+    <category-links *ngFor="let category of artist.categories"
+      [setCategory]="category"
+      [setArtist]="artist">
+    </category-links>
+    <category-links *ngFor="let category of ab_categories"
+      [setCategory]="category"
+      [setArtist]="artist">
+    </category-links>
+    <category-links *ngIf="mood_category"
+      [setCategory]="mood_category"
+      [setArtist]="artist">
+    </category-links>
+    <category-links *ngIf="lastfm_category"
+      [setCategory]="lastfm_category"
+      [setArtist]="artist">
+    </category-links>
+  </div>
+  <!-- <youtube-videos *ngIf="videos"
     [setArtist]="artist"
     [setVideos]="videos">
   </youtube-videos> -->

@@ -56,7 +56,13 @@ import { LayoutComponent }          from '../components/layout.component';
     LayoutComponent,
     routedComponents
   ],
-  providers:    [ ArtistService, MusicBrainzService, YouTubeService, DeezerService, PlayerService ],
+  providers:    [
+    ArtistService,
+    MusicBrainzService,
+    YouTubeService,
+    DeezerService,
+    PlayerService
+  ],
   bootstrap:    [ AppComponent ],
   entryComponents: [ InfoComponent, DemoComponent, LayoutComponent ]
 })

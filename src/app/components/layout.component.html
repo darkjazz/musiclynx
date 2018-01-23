@@ -1,6 +1,14 @@
-<div class="info">
+<div>
   <p>
-    Choose between graph and grid layouts by clicking on one of these pictures: <br><br>
-    <img src="./assets/graph.png" (click)="chooseLayout(0)"> <img src="./assets/grid.png" (click)="chooseLayout(1)">
+    MusicLynx artist connections can be browsed in two layouts: graph (which is the default) and grid.
+    Graph layout displays artists as a network, while the grid layout places linked artists in category boxes.
   </p>
+  <p>
+    Current layout: <span>{{ currentLayout }}</span><br>
+    Choose your preferred layout and click "ACCEPT": <br>
+    <img src="./assets/graph.png" (click)="chooseLayout('GRAPH')"> <img src="./assets/grid.png" (click)="chooseLayout('GRID')">
+  </p>
+  <button mat-icon-button (click)="close()">
+    <mat-icon>check_circle</mat-icon><span>ACCEPT</span>
+  </button>
 </div>

@@ -29,6 +29,7 @@ export class ArtistComponent implements OnInit {
   isPlaying: boolean = false;
   cover: string;
   title: string;
+  layout: string;
 
   constructor(
     private artistService: ArtistService,
@@ -39,6 +40,9 @@ export class ArtistComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.artist = new Artist();
+      if (!sessionStorage["musiclynx-layout"])
+        sessionStorage["musiclynx-layout"] = "GRAPH";
+      this.layout = sessionStorage["musiclynx-layout"];
       if (params['id'] && params['name']) {
         this.artist.name = params['name'];
         if (params['id'].search("http") == -1) {
@@ -126,6 +130,14 @@ export class ArtistComponent implements OnInit {
         event.playing$
           .subscribe(event$ => this.playing(event$));
       })
+  }
+
+  showGraph(): boolean {
+    return this.layout == "GRAPH" && !!this.artist.dbpedia_uri;
+  }
+
+  showGrid(): boolean {
+    return this.layout == "GRID";
   }
 
   goBack(): void {
