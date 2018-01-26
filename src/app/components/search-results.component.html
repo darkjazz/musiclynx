@@ -1,3 +1,4 @@
+<spinner *ngIf="showSpinner"></spinner>
 <div id="search-results">
   <h3 *ngIf="showNoResults">No results for '{{ term }}'</h3>
   <h3 *ngIf="artists.length > 0">Search results for '{{ term }}'</h3>
@@ -8,5 +9,4 @@
       <span class="badge">{{artist.name}}</span> {{artist.disambiguation.substring(0, 73)}}
     </li>
   </ul>
-  <div style="position:relative; top: 200px; right: 200px"><spinner *ngIf="showSpinner"></spinner></div>
 </div>

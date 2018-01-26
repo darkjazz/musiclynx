@@ -116,9 +116,9 @@ export class GraphComponent implements OnInit {
 			.enter().append("text")
 	    .text( d => this.getName(d) )
 	    .style("text-anchor", "middle")
-	    .style("fill", "#000")
+	    .style("fill", "#444")
 	    .style("font-family", "Nunito")
-      .style("font-size", "6pt")
+      .style("font-size", "7pt")
       .style("pointer-events", "none")
       .attr("opacity", 0.35)
       .attr("cursor", "pointer")
@@ -172,8 +172,8 @@ export class GraphComponent implements OnInit {
 
   hideLabel(selected, node) {
     selected.transition().duration(TRNS)
-      .style("font-size", "6pt")
-      .style("fill", "#555")
+      .style("font-size", "7pt")
+      .style("fill", "#444")
       .style("-webkit-text-stroke-width", "0px")
       .style("-webkit-text-stroke-color", "#000")
       .attr("opacity", 0.35);
