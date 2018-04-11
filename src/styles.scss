@@ -1,0 +1,157 @@
+@import '~@angular/material/theming';
+@include mat-core();
+
+$dark-primary: mat-palette($mat-grey, 900, 900, 900);
+$dark-accent:  mat-palette($mat-grey, 900, 900, 900);
+$dark-warn:    mat-palette($mat-deep-orange);
+$menu-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$drawer-backdrop-color: mat-color($mat-grey, 900, 0.0);
+
+@include angular-material-theme($menu-theme);
+
+h1 {
+  color: #369;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 250%;
+}
+h2, h3 {
+  color: #FFAF07;
+  font-family: 'Nunito', sans-serif;
+  font-weight: lighter;
+}
+body {
+  background-color: #000;
+  margin: 2em;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-image: url("./assets/musiclynx-bg.png");
+}
+/* #enddocregion quickstart */
+body, input[text], button {
+  color: #888;
+  font-family: Cambria, Georgia;
+}
+/* #enddocregion toh */
+a, a:visited {
+  color: #4d6a79;
+  -webkit-transition: color .4s ease;
+  transition: color .4s ease;
+  cursor: pointer;
+  cursor: hand;
+  text-decoration: none;
+}
+
+a:hover{
+  color: #039be5;
+}
+
+button {
+  font-family: Arial;
+  background-color: #eee;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  cursor: hand;
+}
+button:hover {
+  background-color: #cfd8dc;
+}
+button:disabled {
+  background-color: #eee;
+  color: #aaa;
+  cursor: auto;
+}
+
+/* Navigation link styles */
+nav a {
+  padding: 5px 10px;
+  text-decoration: none;
+  margin-right: 10px;
+  margin-top: 10px;
+  display: inline-block;
+  background-color: #eee;
+  border-radius: 4px;
+}
+nav a:visited, a:link {
+  color: #607D8B;
+}
+nav a:hover {
+  color: #039be5;
+  background-color: #CFD8DC;
+}
+nav a.active {
+  color: #039be5;
+}
+
+/* items class */
+.items {
+  margin: 0 0 2em 0;
+  list-style-type: none;
+  padding: 0;
+  width: 24em;
+}
+.items li {
+  cursor: pointer;
+  position: relative;
+  left: 0;
+  background-color: #EEE;
+  margin: .5em;
+  padding: .3em 0;
+  height: 1.6em;
+  border-radius: 4px;
+}
+.items li:hover {
+  color: #607D8B;
+  background-color: #DDD;
+  left: .1em;
+}
+.items li.selected {
+  background-color: #CFD8DC;
+  color: white;
+}
+.items li.selected:hover {
+  background-color: #BBD8DC;
+}
+.items .text {
+  position: relative;
+  top: -3px;
+}
+.items .badge {
+  display: inline-block;
+  font-size: small;
+  color: white;
+  padding: 0.8em 0.7em 0 0.7em;
+  background-color: #607D8B;
+  line-height: 1em;
+  position: relative;
+  left: -1px;
+  top: -4px;
+  height: 1.8em;
+  margin-right: .8em;
+  border-radius: 4px 0 0 4px;
+}
+/* #docregion toh */
+/* everywhere else */
+* {
+  font-family: 'Kanit', sans-serif;
+}
+
+.overlay-panel {
+  color: #ddd;
+  display: block;
+  background: #000;
+  padding: 20px;
+  width: 60%;
+  opacity: 0.85;
+  border: 1pt solid #aaa;
+  border-radius: 4pt;
+  width: 75%;
+  height: 75%;
+}
+
+.dark-backdrop {
+  background: #000;
+  opacity: 0.8 !important;
+}
