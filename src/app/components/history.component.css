@@ -1,0 +1,16 @@
+p {
+  text-align:justify;
+}
+
+a, a:visited {
+  color: #87adc1;
+  -webkit-transition: color .4s ease;
+  transition: color .4s ease;
+  cursor: pointer;
+  cursor: hand;
+  text-decoration: none;
+}
+
+a:hover{
+  color: #039be5;
+}

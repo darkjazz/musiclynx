@@ -26,6 +26,7 @@ import { Menu }                     from '../components/menu.component';
 import { InfoComponent }            from '../components/info.component';
 import { DemoComponent }            from '../components/demo.component';
 import { LayoutComponent }          from '../components/layout.component';
+import { HistoryComponent }         from '../components/history.component';
 
 @NgModule({
   imports:      [
@@ -54,6 +55,7 @@ import { LayoutComponent }          from '../components/layout.component';
     InfoComponent,
     DemoComponent,
     LayoutComponent,
+    HistoryComponent,
     routedComponents
   ],
   providers:    [
@@ -64,6 +66,6 @@ import { LayoutComponent }          from '../components/layout.component';
     PlayerService
   ],
   bootstrap:    [ AppComponent ],
-  entryComponents: [ InfoComponent, DemoComponent, LayoutComponent ]
+  entryComponents: [ InfoComponent, DemoComponent, LayoutComponent, HistoryComponent ]
 })
 export class AppModule { }

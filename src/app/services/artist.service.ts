@@ -5,11 +5,11 @@ import { Category } from '../objects/category';
 import { Graph } from '../objects/graph';
 import { Config } from '../objects/config';
 import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
+
+
 import { Base64 as b64 } from 'js-base64';
 
-const GRAPH_LIMIT = 73;
+const GRAPH_LIMIT = 37;
 
 const FILTER = {
   ranking: 0,

@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Jsonp, Response } from '@angular/http';
-import { Howl } from 'howler';
+import { Injectable }     from '@angular/core';
+import { Jsonp, Response }  from '@angular/http';
+import { Howl }           from 'howler';
 
-import { Track } from '../objects/track';
+import { Track }          from '../objects/track';
 import { Observable }     from 'rxjs/rx';
+import { map }            from 'rxjs/operators';
 
 @Injectable()
 export class DeezerService {
@@ -16,8 +17,7 @@ export class DeezerService {
   getTracks(artist_id: string): Observable<Track[]> {
     var uri = this.baseUrl + `/${ artist_id }/top?` + this.queryStr;
     let tracks = this.jsonp
-      .get(uri)
-      .map(mapTracks);
+      .get(uri).pipe(map(mapTracks))
     return tracks;
   }
 

@@ -1,12 +1,10 @@
-import { Component,
-    Input,
-    OnInit,
-    trigger,
+import { Component, Input, OnInit } from '@angular/core';
+import { trigger,
     state,
     style,
     transition,
     animate,
-    keyframes } from '@angular/core';
+    keyframes } from '@angular/animations';
 import { Router } from '@angular/router';
 import { Artist } from '../objects/artist';
 import { Category } from '../objects/category';
@@ -69,7 +67,7 @@ export class CategoryComponent implements OnInit {
 
   gotoDetail(artist: Artist): void {
     var link;
-    if ("id" in artist) {
+    if ('id' in artist && artist.id) {
       let link = ['/artist', artist.id, artist.name ];
       this.router.navigate(link);
     }

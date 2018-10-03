@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Video } from '../objects/video';
 import { Config } from '../objects/config';
-import 'rxjs/add/operator/toPromise';
+
 
 @Injectable()
 export class YouTubeService {

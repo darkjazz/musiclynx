@@ -86,6 +86,18 @@ export class ArtistComponent implements OnInit {
     if (artist.id) this.getAcousticbrainzCategories();
     if (artist.name) this.getMoodplayLinks();
     if (artist.name) this.getDeezerID();
+    this.storeInHistory(artist);
+  }
+
+  storeInHistory(artist: Artist) {
+    var storage = localStorage.getItem('musiclynx-history');
+    var artist_string = JSON.stringify({ id: artist.id, name: artist.name });
+    if (storage)
+      storage += "|" + artist_string;
+    else
+      storage = artist_string;
+    console.log(storage);
+    localStorage.setItem("musiclynx-history", storage);
   }
 
   getImage(): void {
@@ -129,7 +141,9 @@ export class ArtistComponent implements OnInit {
           .subscribe(event$ => this.onEnd());
         event.playing$
           .subscribe(event$ => this.playing(event$));
-      })
+      }).catch(reason => {
+        console.log(reason)
+      });
   }
 
   showGraph(): boolean {

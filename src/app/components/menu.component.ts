@@ -7,6 +7,7 @@ import { MenuItem }         from '../objects/menuitem';
 import { InfoComponent }    from './info.component';
 import { DemoComponent }    from './demo.component';
 import { LayoutComponent }  from './layout.component';
+import { HistoryComponent } from './history.component';
 import { MenuOverlayRef }   from '../objects/overlayref';
 
 interface MenuOverlayConfig {
@@ -19,6 +20,7 @@ const ITEMS = [
   { "text": "about", "icon": "info" },
   { "text": "layout", "icon": "group_work" },
   { "text": "demo", "icon": "movie" },
+  { "text": "history", "icon": "history" },
   { "text": "github", "icon": "cloud_download" }
 ];
 
@@ -75,6 +77,8 @@ export class Menu {
       case "demo":
         viewPortal = new ComponentPortal(DemoComponent);
         break;
+      case "history":
+        viewPortal = new ComponentPortal(HistoryComponent)
     }
     const overlayRef = this.createOverlay();
     const dialogRef = new MenuOverlayRef(overlayRef);

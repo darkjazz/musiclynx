@@ -122,8 +122,6 @@ export class GraphComponent implements OnInit {
       .style("pointer-events", "none")
       .attr("opacity", 0.35)
       .attr("cursor", "pointer")
-      // .on("mouseover", d => this.showLabel(d3.select(d3.event.currentTarget)) )
-      // .on("mouseout", d => this.hideLabel(d3.select(d3.event.currentTarget)) )
       .on("click", d => this.navigate(d) );
 
     this.simulation
@@ -251,6 +249,9 @@ export class GraphComponent implements OnInit {
 
   navigate(artist): void {
     var link;
+    var storage = localStorage.getItem('musiclynx-history');
+    storage += "|" + this.groupName;
+    localStorage.setItem('musiclynx-history', storage);
     if ("id" in artist) {
       let link = ['/artist', artist.id, artist.name ];
       this.router.navigate(link);

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import { Artist } from '../objects/artist';
 import { Config } from '../objects/config';
-import 'rxjs/add/operator/toPromise';
+
 
 @Injectable()
 export class MusicBrainzService {

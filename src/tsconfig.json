@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "",
+    "baseUrl": "/Users/alo/dev/musiclynx-static/",
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
