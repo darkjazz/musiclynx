@@ -1,8 +1,0 @@
-<div class="contain-videos">
-  <div class="current" id="current-video" [innerHtml]="sanitizer.bypassSecurityTrustHtml(_current.link)"></div>
-  <div class="list" [style.height.px]="_current.height">
-    <div *ngFor="let video of _videos">
-      <div class="list_item" (click)="'_current=video'"><img [width]="video.thumbnail.width" [height]="video.thumbnail.height" [src]="video.thumbnail.url" />{{ video.title }}</div>
-    </div>
-  </div>
-</div>
