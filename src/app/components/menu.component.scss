@@ -19,6 +19,10 @@ button {
   }
 }
 
+mat-icon{
+  margin-right: 5px;
+}
+
 .menu_icon{
   font-size: 43px;
 }
@@ -36,4 +40,5 @@ span{
   opacity: 0.85;
   border: 1pt solid #aaa;
   border-radius: 4pt;
+  overflow-y: scroll;
 }

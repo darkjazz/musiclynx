@@ -1,0 +1,60 @@
+p {
+  text-align:justify;
+}
+
+a, a:visited {
+  color: #87adc1;
+  -webkit-transition: color .4s ease;
+  transition: color .4s ease;
+  cursor: pointer;
+  cursor: hand;
+  text-decoration: none;
+}
+
+a:hover{
+  color: #039be5;
+}
+
+button {
+  width: 120px;
+  background-color: transparent !important;
+  color: #666;
+  -webkit-transition: color .4s ease;
+  transition: color .4s ease;
+  &:hover {
+    color: #ddd;
+  }
+}
+
+button span{
+  margin-left: -8px;
+}
+
+.history{
+  color: #FFAF07;
+}
+
+.buttons{
+  display: inline-block;
+}
+
+li {
+  list-style: none;
+}
+
+.category{
+  margin-left: 40px;
+  font-weight: lighter;
+  font-size: 10pt;
+  color: #ddd;
+}
+
+span{
+  padding-left: 10px;
+}
+
+.history_list {
+  margin-top: 10px;
+  height: calc(100% - 60px);
+  overflow-y: scroll;
+}

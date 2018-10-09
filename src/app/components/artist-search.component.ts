@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Observable ,  Subject } from 'rxjs';
 
 import { MusicBrainzService } from '../services/musicbrainz.service';
+import { Config } from '../objects/config';
 
 @Component({
   moduleId: module.id,
@@ -19,9 +20,20 @@ export class ArtistSearchComponent {
 
   search(term: string): void {
     let link = ['/search', encodeURIComponent(term) ];
+    this.storeInHistory(term);
     this.router.navigate(link);
   }
 
-  suggest(term: string): void { }
+  storeInHistory(term: string) {
+    var storage = localStorage.getItem('musiclynx-history');
+    var search = "\"Search for " + term + "\"";
+    if (storage) {
+      storage += Config.history_separator + search;
+    }
+    else {
+      storage = search;
+    }
+    localStorage.setItem("musiclynx-history", storage);
+  }
 
 }

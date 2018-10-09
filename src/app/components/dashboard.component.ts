@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit {
   constructor(private router: Router, private artistService: ArtistService) { }
 
   ngOnInit(): void {
-    localStorage.clear();
     if (!sessionStorage["musiclynx-layout"])
       sessionStorage["musiclynx-layout"] = "GRAPH";
     this.artistService.getFeaturedArtists()

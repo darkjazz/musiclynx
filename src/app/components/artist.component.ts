@@ -1,9 +1,11 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import { PlatformLocation } from '@angular/common';
 import { ActivatedRoute, Params } from '@angular/router';
 
 import { Artist }         from '../objects/artist';
 import { Category }       from '../objects/category';
 import { Track }          from '../objects/track';
+import { Config }         from '../objects/config';
 import { ArtistService }  from '../services/artist.service';
 import { PlayerService }  from '../services/player.service';
 import { DeezerService }  from '../services/deezer.service';
@@ -35,7 +37,8 @@ export class ArtistComponent implements OnInit {
     private artistService: ArtistService,
     private playerService: PlayerService,
     private deezerService: DeezerService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private location: PlatformLocation) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -43,6 +46,7 @@ export class ArtistComponent implements OnInit {
       if (!sessionStorage["musiclynx-layout"])
         sessionStorage["musiclynx-layout"] = "GRAPH";
       this.layout = sessionStorage["musiclynx-layout"];
+      this.location.onPopState(() => { this.addBackActionToStorage(); });
       if (params['id'] && params['name']) {
         this.artist.name = params['name'];
         if (params['id'].search("http") == -1) {
@@ -89,14 +93,30 @@ export class ArtistComponent implements OnInit {
     this.storeInHistory(artist);
   }
 
+  addBackActionToStorage() {
+    var storage = localStorage.getItem('musiclynx-history');
+    var last_item = storage.split(Config.history_separator).pop();
+    if (JSON.parse(last_item) != "Back")
+      storage += Config.history_separator + "\"Back\"";
+    localStorage.setItem('musiclynx-history', storage);
+  }
+
+  checkLastStoreEntry(artist: Artist, storage: string): boolean {
+    var last_item = JSON.parse(storage.split(Config.history_separator).pop());
+    return !(last_item.hasOwnProperty('id') && last_item.id == artist.id);
+  }
+
   storeInHistory(artist: Artist) {
     var storage = localStorage.getItem('musiclynx-history');
     var artist_string = JSON.stringify({ id: artist.id, name: artist.name });
-    if (storage)
-      storage += "|" + artist_string;
-    else
+    if (storage) {
+      if (this.checkLastStoreEntry(artist, storage))
+        storage += Config.history_separator + artist_string;
+    }
+    else {
       storage = artist_string;
-    console.log(storage);
+    }
+    // console.log(storage);
     localStorage.setItem("musiclynx-history", storage);
   }
 

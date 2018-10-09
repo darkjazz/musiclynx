@@ -9,7 +9,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { Base64 as b64 } from 'js-base64';
 
-const GRAPH_LIMIT = 37;
+const GRAPH_LIMIT = 47;
 
 const FILTER = {
   ranking: 0,

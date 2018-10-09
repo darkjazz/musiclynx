@@ -3,7 +3,7 @@ import { Jsonp, Response }  from '@angular/http';
 import { Howl }           from 'howler';
 
 import { Track }          from '../objects/track';
-import { Observable }     from 'rxjs/rx';
+import { Observable }     from 'rxjs/Observable';
 import { map }            from 'rxjs/operators';
 
 @Injectable()

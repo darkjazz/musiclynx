@@ -1,11 +1,20 @@
-<div>
-  <p>
-    HISTORY
-  </p>
-  <p>
-    LIST
-  </p>
-  <p>
-    DOWNLOAD
-  </p>
+<div class="history">
+  <div>HISTORY</div>
+  <div *ngIf="history_list" class="buttons">
+    <button mat-icon-button (click)="clear()">
+      <mat-icon>clear</mat-icon><span>CLEAR</span>
+    </button>
+    <button mat-icon-button (click)="create()">
+      <mat-icon>playlist_add</mat-icon><span>CREATE A PLAYLIST</span>
+    </button>
+  </div>
+</div>
+<div *ngIf="!history_list">There is no browsing history yet. Please search for an artist or select one from the featured list.</div>
+<div *ngIf="history_list" class="history_list">
+  <ul>
+    <li *ngFor="let item of history_list">
+      <a *ngIf="!item.hasOwnProperty('type')" [href]="makeURI(item)">{{item.name}}</a>
+      <div *ngIf="item.hasOwnProperty('type')" class="category">{{item.label}}</div>
+    </li>
+  </ul>
 </div>

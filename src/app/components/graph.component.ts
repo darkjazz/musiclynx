@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild, ElementRef, Renderer } from "@angu
 import { Router } from '@angular/router';
 import { Artist } from "../objects/artist";
 import { Node, Link, Graph } from "../objects/graph";
+import { Config } from "../objects/config";
 import { ArtistService } from '../services/artist.service';
 import * as d3 from "d3";
 
@@ -247,11 +248,15 @@ export class GraphComponent implements OnInit {
     d.fy = null;
   }
 
+  addCatgeoryToStorage() {
+    var storage = localStorage.getItem('musiclynx-history');
+    storage += Config.history_separator + "\"" + this.groupName + "\"";
+    localStorage.setItem('musiclynx-history', storage);
+  }
+
   navigate(artist): void {
     var link;
-    var storage = localStorage.getItem('musiclynx-history');
-    storage += "|" + this.groupName;
-    localStorage.setItem('musiclynx-history', storage);
+    this.addCatgeoryToStorage();
     if ("id" in artist) {
       let link = ['/artist', artist.id, artist.name ];
       this.router.navigate(link);
