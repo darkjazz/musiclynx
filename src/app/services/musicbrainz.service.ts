@@ -14,7 +14,7 @@ export class MusicBrainzService {
 
   getArtists(searchTerm: string): Promise<Artist[]> {
     searchTerm = encodeURIComponent(searchTerm);
-    this.url = Config.server + `/musicbrainz/artist_search/${ searchTerm }`;
+    this.url = Config.server + `/musicbrainz/artist_search/${ searchTerm }/${ sessionStorage["user-guid"] }`;
     return this.http.request(this.url, { headers: this.headers })
       .toPromise()
       .then((res:Response) => {

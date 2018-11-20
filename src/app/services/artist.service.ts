@@ -53,7 +53,7 @@ export class ArtistService {
   constructMusicbrainzArtist(artist: Artist): Promise<Artist> {
     var id = artist.id;
     var name = encodeURIComponent(artist.name);
-    var params = `/${ id }/${ name }`;
+    var params = `/${ id }/${ name }/${ sessionStorage["user-guid"] }`;
     return this.http.get(Config.server + Config.artist + '/get_mb_artist' + params)
       .toPromise()
       .then((res:Response) => {
@@ -65,7 +65,7 @@ export class ArtistService {
   constructDbpediaArtist(artist: Artist): Promise<Artist> {
     var artist_uri = b64.encode(artist.dbpedia_uri);
     var name = encodeURIComponent(artist.name);
-    var params = `/${ artist_uri }/${ name }`;
+    var params = `/${ artist_uri }/${ name }/${ sessionStorage["user-guid"] }`;
     return this.http.get(Config.server + Config.artist + '/get_dbp_artist' + params)
       .toPromise()
       .then((res:Response) => {
@@ -182,11 +182,21 @@ export class ArtistService {
       degree = 0;
     var params = `/${ dbpedia_uri }/${ name }/${ id }/${ limit }/${ filter }/${ degree }`;
     var uri = Config.server + Config.artist + '/get_artist_graph' + params;
-    console.log(uri);
+    // console.log(uri);
     return this.http.get(uri)
       .toPromise()
       .then((res:Response) => {
         return res.json() as Graph;
+      })
+      .catch(this.handleError)
+  }
+
+  public logCategory(category: string) {
+    var params = `/${ encodeURIComponent(category) }/${ sessionStorage["user-guid"] }`;
+    var uri = Config.server + Config.artist + '/log_category' + params;
+    return this.http.get(uri)
+      .toPromise()
+      .then(() => {
       })
       .catch(this.handleError)
   }

@@ -19,9 +19,11 @@ export class ArtistSearchComponent {
     private router: Router) { }
 
   search(term: string): void {
-    let link = ['/search', encodeURIComponent(term) ];
-    this.storeInHistory(term);
-    this.router.navigate(link);
+    if (term) {
+      let link = ['/search', encodeURIComponent(term) ];
+      this.storeInHistory(term);
+      this.router.navigate(link);      
+    }
   }
 
   storeInHistory(term: string) {

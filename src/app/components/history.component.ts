@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Config } from '../objects/config';
+import { Router } from '@angular/router';
+import { ArtistService } from '../services/artist.service';
 
 @Component({
   selector: 'history',
@@ -10,6 +12,8 @@ export class HistoryComponent implements OnInit {
 
   history_string: string;
   history_list: string[];
+
+  constructor(private router: Router, private artistService: ArtistService) { }
 
   ngOnInit() {
     this.history_string = localStorage.getItem('musiclynx-history');
@@ -23,8 +27,10 @@ export class HistoryComponent implements OnInit {
       });
   }
 
-  makeURI(artist) {
-    return Config.base_uri + "/artist/" + artist.id + "/" + encodeURIComponent(artist.name);
+  navigate(artist) {
+    window.location.reload();
+    let link = ['/artist', artist.id, artist.name];
+    this.router.navigate(link);
   }
 
   clear() {
@@ -32,8 +38,24 @@ export class HistoryComponent implements OnInit {
     window.location.reload();
   }
 
-  create() {
+  showArtistArrow(artist): boolean {
+    var categoryClicked = true;
+    var index = this.history_list.indexOf(artist);
+    if (index == this.history_list.length - 1 || this.history_list[index].hasOwnProperty('id') ||
+      this.isSpecialCategory(this.history_list[this.history_list.indexOf(artist) + 1])
+    )
+    {
+      categoryClicked = false;
+    }
+    return
+  }
 
+  isSpecialCategory(category): boolean {
+    return (
+      category.label == "Featured Artists" ||
+      category.label == "History" ||
+      category.label.indexOf("Search for") > -1
+    );
   }
 
 }

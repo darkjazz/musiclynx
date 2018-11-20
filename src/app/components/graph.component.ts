@@ -119,9 +119,9 @@ export class GraphComponent implements OnInit {
 	    .style("text-anchor", "middle")
 	    .style("fill", "#444")
 	    .style("font-family", "Nunito")
-      .style("font-size", "7pt")
+      .style("font-size", "8pt")
       .style("pointer-events", "none")
-      .attr("opacity", 0.35)
+      .attr("opacity", 0.45)
       .attr("cursor", "pointer")
       .on("click", d => this.navigate(d) );
 
@@ -248,15 +248,26 @@ export class GraphComponent implements OnInit {
     d.fy = null;
   }
 
+  addCurrentArtist(storage) {
+    var last_item = JSON.parse(storage.split(Config.history_separator).pop());
+    if (!last_item.hasOwnProperty('type') && last_item.id != this.artist.id) {
+      storage += Config.history_separator + JSON.stringify({ id: this.artist.id, name: this.artist.name });
+    }
+    return storage;
+  }
+
   addCatgeoryToStorage() {
     var storage = localStorage.getItem('musiclynx-history');
+    storage = this.addCurrentArtist(storage);
     storage += Config.history_separator + "\"" + this.groupName + "\"";
     localStorage.setItem('musiclynx-history', storage);
+    this.artistService.logCategory(this.groupName);
   }
 
   navigate(artist): void {
     var link;
     this.addCatgeoryToStorage();
+
     if ("id" in artist) {
       let link = ['/artist', artist.id, artist.name ];
       this.router.navigate(link);

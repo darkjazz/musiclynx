@@ -2,17 +2,23 @@ p {
   text-align:justify;
 }
 
-a, a:visited {
+.artist, .artist:visited {
   color: #87adc1;
-  -webkit-transition: color .4s ease;
-  transition: color .4s ease;
+  -webkit-transition: color .4s ease, background-color .4s ease;
+  transition: color .4s ease, background-color .4s ease;
   cursor: pointer;
   cursor: hand;
   text-decoration: none;
+  font-size: 13pt;
+  border-radius: 7px;
+  border: 1pt #ddd solid;
+  padding: 5px;
+  background-color: #222;
 }
 
-a:hover{
+.artist:hover{
   color: #039be5;
+  background-color: #333;
 }
 
 button {
@@ -40,13 +46,34 @@ button span{
 
 li {
   list-style: none;
+  text-align: center;
+  margin-bottom: 2px;
 }
 
 .category{
-  margin-left: 40px;
   font-weight: lighter;
-  font-size: 10pt;
+  font-size: 11pt;
   color: #ddd;
+  border-radius: 7px;
+  opacity: 0.75;
+  border: 1pt #ddd solid;
+  padding: 5px;
+}
+
+.category-special {
+  font-size: 11pt;
+  color: #FFAF07;
+  opacity: 0.75;
+  border-radius: 7px;
+  opacity: 0.75;
+  border: 1pt #ddd solid;
+  padding: 5px;
+}
+
+.arrow{
+  font-size: 16pt;
+  color: #039be5;
+  vertical-align: bottom;
 }
 
 span{

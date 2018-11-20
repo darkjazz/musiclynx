@@ -1,11 +1,12 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { PlatformLocation } from '@angular/common';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 
 import { Artist }         from '../objects/artist';
 import { Category }       from '../objects/category';
 import { Track }          from '../objects/track';
 import { Config }         from '../objects/config';
+import { getUserGuid }    from '../objects/util';
 import { ArtistService }  from '../services/artist.service';
 import { PlayerService }  from '../services/player.service';
 import { DeezerService }  from '../services/deezer.service';
@@ -38,6 +39,7 @@ export class ArtistComponent implements OnInit {
     private playerService: PlayerService,
     private deezerService: DeezerService,
     private route: ActivatedRoute,
+    private router: Router,
     private location: PlatformLocation) { }
 
   ngOnInit(): void {
@@ -45,8 +47,11 @@ export class ArtistComponent implements OnInit {
       this.artist = new Artist();
       if (!sessionStorage["musiclynx-layout"])
         sessionStorage["musiclynx-layout"] = "GRAPH";
+      var guid = getUserGuid();
+      // console.log(guid);
+      if (!sessionStorage["user-guid"])
+        sessionStorage["user-guid"] = guid;
       this.layout = sessionStorage["musiclynx-layout"];
-      this.location.onPopState(() => { this.addBackActionToStorage(); });
       if (params['id'] && params['name']) {
         this.artist.name = params['name'];
         if (params['id'].search("http") == -1) {
@@ -93,30 +98,28 @@ export class ArtistComponent implements OnInit {
     this.storeInHistory(artist);
   }
 
-  addBackActionToStorage() {
-    var storage = localStorage.getItem('musiclynx-history');
-    var last_item = storage.split(Config.history_separator).pop();
-    if (JSON.parse(last_item) != "Back")
-      storage += Config.history_separator + "\"Back\"";
-    localStorage.setItem('musiclynx-history', storage);
-  }
-
-  checkLastStoreEntry(artist: Artist, storage: string): boolean {
-    var last_item = JSON.parse(storage.split(Config.history_separator).pop());
-    return !(last_item.hasOwnProperty('id') && last_item.id == artist.id);
+  checkArtistExists(artist: Artist, storage: string): boolean {
+    var history_string = localStorage.getItem('musiclynx-history');
+    var artist_exists = false;
+    if (history_string)
+      var history_list = history_string.split(Config.history_separator).map(item => {
+        var obj = JSON.parse(item);
+        if (typeof obj !== 'string' && obj.id == artist.id)
+          artist_exists = true;
+      });
+    return artist_exists;
   }
 
   storeInHistory(artist: Artist) {
     var storage = localStorage.getItem('musiclynx-history');
     var artist_string = JSON.stringify({ id: artist.id, name: artist.name });
     if (storage) {
-      if (this.checkLastStoreEntry(artist, storage))
+      if (!this.checkArtistExists(artist, storage))
         storage += Config.history_separator + artist_string;
     }
     else {
       storage = artist_string;
     }
-    // console.log(storage);
     localStorage.setItem("musiclynx-history", storage);
   }
 
@@ -162,7 +165,7 @@ export class ArtistComponent implements OnInit {
         event.playing$
           .subscribe(event$ => this.playing(event$));
       }).catch(reason => {
-        console.log(reason)
+        // console.log(reason)
       });
   }
 
