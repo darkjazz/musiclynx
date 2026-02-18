@@ -1,23 +1,22 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
-import { PlatformLocation } from '@angular/common';
-import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
+import { Component, EventEmitter, OnInit } from "@angular/core";
+import { PlatformLocation } from "@angular/common";
+import { Router, ActivatedRoute, Params, NavigationEnd } from "@angular/router";
 
-import { Artist }         from '../objects/artist';
-import { Category }       from '../objects/category';
-import { Track }          from '../objects/track';
-import { Config }         from '../objects/config';
-import { getUserGuid }    from '../objects/util';
-import { ArtistService }  from '../services/artist.service';
-import { PlayerService }  from '../services/player.service';
-import { DeezerService }  from '../services/deezer.service';
+import { Artist } from "../objects/artist";
+import { Category } from "../objects/category";
+import { Track } from "../objects/track";
+import { Config } from "../objects/config";
+import { ArtistService } from "../services/artist.service";
+import { PlayerService } from "../services/player.service";
+import { DeezerService } from "../services/deezer.service";
 
 const MAX_ARTISTS = 30;
 
 @Component({
   moduleId: module.id,
-  selector: 'artist-detail',
-  templateUrl: 'artist.component.html',
-  styleUrls: ['artist.component.css']
+  selector: "artist-detail",
+  templateUrl: "artist.component.html",
+  styleUrls: ["artist.component.css"],
 })
 export class ArtistComponent implements OnInit {
   artist: Artist;
@@ -28,7 +27,7 @@ export class ArtistComponent implements OnInit {
   error: any;
   showSpinner: boolean;
   tracks: Array<any>;
-  index:number;
+  index: number;
   isPlaying: boolean = false;
   cover: string;
   title: string;
@@ -40,53 +39,55 @@ export class ArtistComponent implements OnInit {
     private deezerService: DeezerService,
     private route: ActivatedRoute,
     private router: Router,
-    private location: PlatformLocation) { }
+    private location: PlatformLocation,
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.artist = new Artist();
       if (!sessionStorage["musiclynx-layout"])
         sessionStorage["musiclynx-layout"] = "GRAPH";
-      var guid = getUserGuid();
       // console.log(guid);
-      if (!sessionStorage["user-guid"])
-        sessionStorage["user-guid"] = guid;
       this.layout = sessionStorage["musiclynx-layout"];
-      if (params['id'] && params['name']) {
-        this.artist.name = params['name'];
-        if (params['id'].search("http") == -1) {
-          this.artist.id = params['id'];
+      if (params["id"] && params["name"]) {
+        this.artist.name = params["name"];
+        if (params["id"].search("http") == -1) {
+          this.artist.id = params["id"];
           this.getMBArtist();
-        }
-        else {
-          this.artist.dbpedia_uri = params['id'];
+        } else {
+          this.artist.dbpedia_uri = params["id"];
           this.getDBPArtist();
         }
-      }
-      else {
+      } else {
         window.history.back();
       }
-    })
+    });
   }
 
   getMBArtist(): void {
     this.showSpinner = true;
     this.cover = "./assets/deezer.png";
-    this.artistService.constructMusicbrainzArtist(this.artist).then(artist => {
-      this.displayArtist(artist);
-    }).catch(reason => {
-      console.log(reason)
-    });
+    this.artistService
+      .constructMusicbrainzArtist(this.artist)
+      .then((artist) => {
+        this.displayArtist(artist);
+      })
+      .catch((reason) => {
+        console.log(reason);
+      });
   }
 
   getDBPArtist(): void {
     this.showSpinner = true;
     this.cover = "./assets/deezer.png";
-    this.artistService.constructDbpediaArtist(this.artist).then(artist => {
-      this.displayArtist(artist);
-    }).catch(reason => {
-      console.log(reason)
-    });
+    this.artistService
+      .constructDbpediaArtist(this.artist)
+      .then((artist) => {
+        this.displayArtist(artist);
+      })
+      .catch((reason) => {
+        console.log(reason);
+      });
   }
 
   displayArtist(artist: Artist): void {
@@ -99,72 +100,73 @@ export class ArtistComponent implements OnInit {
   }
 
   checkArtistExists(artist: Artist, storage: string): boolean {
-    var history_string = localStorage.getItem('musiclynx-history');
+    var history_string = localStorage.getItem("musiclynx-history");
     var artist_exists = false;
     if (history_string)
-      var history_list = history_string.split(Config.history_separator).map(item => {
-        var obj = JSON.parse(item);
-        if (typeof obj !== 'string' && obj.id == artist.id)
-          artist_exists = true;
-      });
+      var history_list = history_string
+        .split(Config.history_separator)
+        .map((item) => {
+          var obj = JSON.parse(item);
+          if (typeof obj !== "string" && obj.id == artist.id)
+            artist_exists = true;
+        });
     return artist_exists;
   }
 
   storeInHistory(artist: Artist) {
-    var storage = localStorage.getItem('musiclynx-history');
+    var storage = localStorage.getItem("musiclynx-history");
     var artist_string = JSON.stringify({ id: artist.id, name: artist.name });
     if (storage) {
       if (!this.checkArtistExists(artist, storage))
         storage += Config.history_separator + artist_string;
-    }
-    else {
+    } else {
       storage = artist_string;
     }
     localStorage.setItem("musiclynx-history", storage);
   }
 
   getImage(): void {
-    this.artistService.getImage(this.artist.id)
-      .then(artist => {
-        this.artist.image = artist.image;
-        if (artist.original_image) this.artist.original_image = artist.original_image;
-        if (artist.entity_id) this.artist.entity_id = artist.entity_id;
-      });
+    this.artistService.getImage(this.artist.id).then((artist) => {
+      this.artist.image = artist.image;
+      if (artist.original_image)
+        this.artist.original_image = artist.original_image;
+      if (artist.entity_id) this.artist.entity_id = artist.entity_id;
+    });
   }
 
   getAcousticbrainzCategories(): void {
-    this.artistService.getAcousticbrainzLinks(this.artist)
-      .then(response => {
-        this.ab_categories = response;
-      })
+    this.artistService.getAcousticbrainzLinks(this.artist).then((response) => {
+      this.ab_categories = response;
+    });
   }
 
   getMoodplayLinks(): void {
-    this.artistService.getMoodplayLinks(this.artist, MAX_ARTISTS)
-      .then(response => {
+    this.artistService
+      .getMoodplayLinks(this.artist, MAX_ARTISTS)
+      .then((response) => {
         if (response.label) this.mood_category = response;
       });
   }
 
   getLastFMLinks(): void {
-    this.artistService.getLastFMLinks(this.artist)
-      .then(response => {
-        if (response.label) this.lastfm_category = response;
-      });
+    this.artistService.getLastFMLinks(this.artist).then((response) => {
+      if (response.label) this.lastfm_category = response;
+    });
   }
 
   getDeezerID(): void {
-    this.artistService.getDeezerArtistID(this.artist)
-      .then(response => {
+    this.artistService
+      .getDeezerArtistID(this.artist)
+      .then((response) => {
         this.deezer_id = response.toString();
-        this.deezerService.getTracks(this.deezer_id)
-          .subscribe(tracks => this.getTracks(tracks));
+        this.deezerService
+          .getTracks(this.deezer_id)
+          .subscribe((tracks) => this.getTracks(tracks));
         let event = this.playerService.playerEvents;
-        event.onEnd$
-          .subscribe(event$ => this.onEnd());
-        event.playing$
-          .subscribe(event$ => this.playing(event$));
-      }).catch(reason => {
+        event.onEnd$.subscribe((event$) => this.onEnd());
+        event.playing$.subscribe((event$) => this.playing(event$));
+      })
+      .catch((reason) => {
         // console.log(reason)
       });
   }
@@ -182,7 +184,7 @@ export class ArtistComponent implements OnInit {
   }
 
   // --------------------- player methods ----------------------
-  getTracks(tracks):void {
+  getTracks(tracks): void {
     if (tracks.length > 0) {
       this.tracks = tracks;
       this.cover = tracks[0].cover_medium;
@@ -190,7 +192,7 @@ export class ArtistComponent implements OnInit {
     }
   }
 
-  selectTrack(i):void {
+  selectTrack(i): void {
     this.cover = this.tracks[i].cover_medium;
     // this.title = tracks[i].title;
     this.playerService.playNew(i);
@@ -206,8 +208,8 @@ export class ArtistComponent implements OnInit {
   }
 
   stop() {
-    if(this.isPlaying) {
-        this.playerService.stop();
+    if (this.isPlaying) {
+      this.playerService.stop();
     }
   }
 

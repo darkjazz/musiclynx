@@ -1,21 +1,28 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, Renderer } from "@angular/core";
-import { Router } from '@angular/router';
+import {
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Renderer,
+} from "@angular/core";
+import { Router } from "@angular/router";
 import { Artist } from "../objects/artist";
 import { Node, Link, Graph } from "../objects/graph";
 import { Config } from "../objects/config";
-import { ArtistService } from '../services/artist.service';
+import { ArtistService } from "../services/artist.service";
 import * as d3 from "d3";
 
 const TRNS = 200;
 
 @Component({
   moduleId: module.id,
-  selector: 'artist-graph',
-  templateUrl: 'graph.component.html',
-  styleUrls: ['graph.component.css']
+  selector: "artist-graph",
+  templateUrl: "graph.component.html",
+  styleUrls: ["graph.component.css"],
 })
 export class GraphComponent implements OnInit {
-  @ViewChild('graph') private element: ElementRef;
+  @ViewChild("graph") private element: ElementRef;
   showSpinner: boolean;
   artist: Artist;
   graph: Graph;
@@ -33,7 +40,11 @@ export class GraphComponent implements OnInit {
   radius;
   label;
 
-  constructor(private artistService: ArtistService, private router: Router, public renderer: Renderer) { }
+  constructor(
+    private artistService: ArtistService,
+    private router: Router,
+    public renderer: Renderer,
+  ) {}
 
   @Input()
   set setArtist(artist: Artist) {
@@ -45,24 +56,43 @@ export class GraphComponent implements OnInit {
     this.getGraph();
   }
 
-  getId(node) { return node["id"] }
+  getId(node) {
+    return node["id"];
+  }
 
-  getName(node) { return node["name"] }
+  getName(node) {
+    return node["name"];
+  }
 
-  getURI(node) { return node["uri"] }
+  getURI(node) {
+    return node["uri"];
+  }
 
-  getGroup(node) { return node["group"] }
+  getGroup(node) {
+    return node["group"];
+  }
 
-  getRadius(node) { return (20 + (parseInt(node["ranking"]) * 2)); }
+  getRadius(node) {
+    return 25;
+    // const ranking = parseFloat(node["ranking"]);
+    // const minRanking = 1;
+    // const maxRanking = 100;
+    // const minRadius = 20;
+    // const maxRadius = 50;
 
+    // return (
+    //   ((ranking - minRanking) / (maxRanking - minRanking)) *
+    //     (maxRadius - minRadius) +
+    //   minRadius
+    // );
+  }
   getGraph() {
-    this.artistService.getArtistGraph(this.artist)
-      .then(graph => {
-        this.hideGroupLabel();
-        this.graph = graph;
-        if (!("error" in graph)) this.initialise();
-        else d3.select(this.element.nativeElement).attr("height", 0);
-      });
+    this.artistService.getArtistGraph(this.artist).then((graph) => {
+      this.hideGroupLabel();
+      this.graph = graph;
+      if (!("error" in graph)) this.initialise();
+      else d3.select(this.element.nativeElement).attr("height", 0);
+    });
   }
 
   initialise() {
@@ -73,36 +103,52 @@ export class GraphComponent implements OnInit {
 
     this.color = d3.scaleOrdinal(d3.schemeCategory20);
 
-    this.simulation = d3.forceSimulation()
-        .force("link", d3.forceLink().id( (d) => this.getName(d) ))
-        .force("charge", d3.forceManyBody().strength(-15))
-        .force("collide", d3.forceCollide().radius( d => this.getRadius(d) + 7.0).iterations(2))
-        .force("center", d3.forceCenter(this.width / 2, this.height / 2));
+    this.simulation = d3
+      .forceSimulation()
+      .force(
+        "link",
+        d3.forceLink().id((d) => this.getName(d)),
+      )
+      .force("charge", d3.forceManyBody().strength(-15))
+      .force(
+        "collide",
+        d3
+          .forceCollide()
+          .radius((d) => this.getRadius(d) + 7.0)
+          .iterations(2),
+      )
+      .force("center", d3.forceCenter(this.width / 2, this.height / 2));
 
-    this.link = this.svg.append("g")
+    this.link = this.svg
+      .append("g")
       .attr("stroke", "#aaa")
       .selectAll("line")
       .data(this.graph.links)
-      .enter().append("line")
+      .enter()
+      .append("line")
       .attr("stroke-opacity", 0.4)
       .attr("stroke-width", "2px");
 
-    this.node = this.svg.append("g")
+    this.node = this.svg
+      .append("g")
       .selectAll("circle")
       .data(this.graph.nodes)
-      .enter().append("circle")
-      .attr("r", d => this.getRadius(d) )
-      .attr("fill", d => this.color(d.group))
+      .enter()
+      .append("circle")
+      .attr("r", (d) => this.getRadius(d))
+      .attr("fill", (d) => this.color(d.group))
       .attr("stroke", "#666")
       .attr("stroke-width", "1.5px")
       .attr("cursor", "pointer")
-      .on("mouseover", d => this.highlightGroup(d) )
-      .on("mouseout", d => this.restoreGroup(d) )
-      .on("click", d => this.navigate(d) )
-      .call(d3.drag()
-        .on("start", d => this.dragstarted(d))
-        .on("drag", d => this.dragged(d))
-        .on("end", d => this.dragended(d))
+      .on("mouseover", (d) => this.highlightGroup(d))
+      .on("mouseout", (d) => this.restoreGroup(d))
+      .on("click", (d) => this.navigate(d))
+      .call(
+        d3
+          .drag()
+          .on("start", (d) => this.dragstarted(d))
+          .on("drag", (d) => this.dragged(d))
+          .on("end", (d) => this.dragended(d)),
       );
 
     // this.node.append("title")
@@ -112,56 +158,64 @@ export class GraphComponent implements OnInit {
     //   .attr("opacity", 0.75)
     //   .text( d => this.getGroup(d) );
 
-    this.label = this.svg.selectAll(".label")
-			.data(this.graph.nodes)
-			.enter().append("text")
-	    .text( d => this.getName(d) )
-	    .style("text-anchor", "middle")
-	    .style("fill", "#444")
-	    .style("font-family", "Nunito")
+    this.label = this.svg
+      .selectAll(".label")
+      .data(this.graph.nodes)
+      .enter()
+      .append("text")
+      .text((d) => this.getName(d))
+      .style("text-anchor", "middle")
+      .style("fill", "#444")
+      .style("font-family", "Nunito")
       .style("font-size", "8pt")
       .style("pointer-events", "none")
       .attr("opacity", 0.45)
       .attr("cursor", "pointer")
-      .on("click", d => this.navigate(d) );
+      .on("click", (d) => this.navigate(d));
 
-    this.simulation
-        .nodes(this.graph.nodes)
-        .on("tick", () => this.ticked());
+    this.simulation.nodes(this.graph.nodes).on("tick", () => this.ticked());
 
-    this.simulation.force("link")
-        .links(this.graph.links);
-
+    this.simulation.force("link").links(this.graph.links);
   }
 
   ticked() {
     this.link
-      .attr("x1", d => d.source.x )
-      .attr("y1", d => d.source.y )
-      .attr("x2", d => d.target.x )
-      .attr("y2", d => d.target.y );
+      .attr("x1", (d) => d.source.x)
+      .attr("y1", (d) => d.source.y)
+      .attr("x2", (d) => d.target.x)
+      .attr("y2", (d) => d.target.y);
 
-    this.node
-      .attr("cx", d => this.getX(d) )
-      .attr("cy", d => this.getY(d) );
+    this.node.attr("cx", (d) => this.getX(d)).attr("cy", (d) => this.getY(d));
 
     this.label
-      .attr("x", function(d) { return d.x; })
-      .attr("y", function(d) { return d.y; });
+      .attr("x", function (d) {
+        return d.x;
+      })
+      .attr("y", function (d) {
+        return d.y;
+      });
   }
 
   getX(d) {
-    d.x = Math.max(this.getRadius(d), Math.min(this.width - this.getRadius(d), d.x));
+    d.x = Math.max(
+      this.getRadius(d),
+      Math.min(this.width - this.getRadius(d), d.x),
+    );
     return d.x;
   }
 
   getY(d) {
-    d.y = Math.max(this.getRadius(d), Math.min(this.height - this.getRadius(d), d.y))
+    d.y = Math.max(
+      this.getRadius(d),
+      Math.min(this.height - this.getRadius(d), d.y),
+    );
     return d.y;
   }
 
   showLabel(selected, node) {
-    selected.transition().duration(TRNS)
+    selected
+      .transition()
+      .duration(TRNS)
       .style("font-size", "16pt")
       .style("fill", "#ddd")
       .style("-webkit-text-stroke-width", "1px")
@@ -170,7 +224,9 @@ export class GraphComponent implements OnInit {
   }
 
   hideLabel(selected, node) {
-    selected.transition().duration(TRNS)
+    selected
+      .transition()
+      .duration(TRNS)
       .style("font-size", "7pt")
       .style("fill", "#444")
       .style("-webkit-text-stroke-width", "0px")
@@ -179,35 +235,49 @@ export class GraphComponent implements OnInit {
   }
 
   highlightGroup(selected) {
-    var label = this.svg.selectAll("text").filter(node => {
-      return (node["name"] == selected.name)
+    var label = this.svg.selectAll("text").filter((node) => {
+      return node["name"] == selected.name;
     });
     this.showLabel(label, selected);
     this.showGroupLabel(selected);
-    this.svg.selectAll("circle").filter(node => {
-      return (node.group !== selected.group)
-    }).transition().duration(TRNS).attr("opacity", 0.3);
-    this.svg.selectAll("circle").filter(node => {
-      return (node.group == selected.group)
-    }).transition().duration(TRNS)
+    this.svg
+      .selectAll("circle")
+      .filter((node) => {
+        return node.group !== selected.group;
+      })
+      .transition()
+      .duration(TRNS)
+      .attr("opacity", 0.3);
+    this.svg
+      .selectAll("circle")
+      .filter((node) => {
+        return node.group == selected.group;
+      })
+      .transition()
+      .duration(TRNS)
       .attr("stroke", "#fff")
       .attr("stroke-width", "3px");
-    this.svg.selectAll("line").transition().duration(TRNS)
+    this.svg
+      .selectAll("line")
+      .transition()
+      .duration(TRNS)
       .attr("stroke-opacity", 0.1)
       .attr("stroke-width", "1px");
   }
 
   restoreGroup(unselected) {
-    var label = this.svg.selectAll("text").filter(node => {
-      return (node["name"] == unselected.name)
+    var label = this.svg.selectAll("text").filter((node) => {
+      return node["name"] == unselected.name;
     });
     this.hideLabel(label, unselected);
-    this.hideGroupLabel()
-    this.svg.selectAll("circle")
+    this.hideGroupLabel();
+    this.svg
+      .selectAll("circle")
       .attr("stroke", "#666")
       .attr("stroke-width", "1.5px")
       .attr("opacity", 1.0);
-    this.svg.selectAll("line")
+    this.svg
+      .selectAll("line")
       .attr("stroke-opacity", 0.4)
       .attr("stroke-width", "2px");
   }
@@ -250,18 +320,19 @@ export class GraphComponent implements OnInit {
 
   addCurrentArtist(storage) {
     var last_item = JSON.parse(storage.split(Config.history_separator).pop());
-    if (!last_item.hasOwnProperty('type') && last_item.id != this.artist.id) {
-      storage += Config.history_separator + JSON.stringify({ id: this.artist.id, name: this.artist.name });
+    if (!last_item.hasOwnProperty("type") && last_item.id != this.artist.id) {
+      storage +=
+        Config.history_separator +
+        JSON.stringify({ id: this.artist.id, name: this.artist.name });
     }
     return storage;
   }
 
   addCatgeoryToStorage() {
-    var storage = localStorage.getItem('musiclynx-history');
+    var storage = localStorage.getItem("musiclynx-history");
     storage = this.addCurrentArtist(storage);
-    storage += Config.history_separator + "\"" + this.groupName + "\"";
-    localStorage.setItem('musiclynx-history', storage);
-    this.artistService.logCategory(this.groupName);
+    storage += Config.history_separator + '"' + this.groupName + '"';
+    localStorage.setItem("musiclynx-history", storage);
   }
 
   navigate(artist): void {
@@ -269,12 +340,10 @@ export class GraphComponent implements OnInit {
     this.addCatgeoryToStorage();
 
     if ("id" in artist) {
-      let link = ['/artist', artist.id, artist.name ];
+      let link = ["/artist", artist.id, artist.name];
       this.router.navigate(link);
-    }
-    else
-    {
-      let link = ['/artist', artist.uri, artist.name ];
+    } else {
+      let link = ["/artist", artist.uri, artist.name];
       this.router.navigate(link);
     }
   }

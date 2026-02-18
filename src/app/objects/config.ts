@@ -1,5 +1,5 @@
 export const Config = {
-  // server: `https://musiclynx-api.herokuapp.com`,
+  // server: `https://musiclynx-server.fly.dev`,
   server: "http://127.0.0.1:8080",
   // base_uri: "https://musiclynx.github.io/#",
   base_uri: "http://127.0.0.1:4200/#",
@@ -12,5 +12,5 @@ export const Config = {
   lastfm: "/lastfm",
   artist: "/artist",
   audio: "/audio",
-  history_separator: "|"
-}
+  history_separator: "|",
+};

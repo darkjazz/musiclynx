@@ -1,59 +1,102 @@
 <spinner *ngIf="showSpinner"></spinner>
 <div *ngIf="!showSpinner">
-  <h2>{{artist.name}}</h2>
-  <div>
-    <div *ngIf="artist.abstract" class="abstract"> {{ artist.abstract }}</div>
-    <div class="player">
-      <!-- <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div> -->
-      <player *ngIf="deezer_id"
-        [playing]="isPlaying"
-        [cover]="cover"
-        [title]="title"
-        (play)="play()"
-        (pause)="pause()"
-        (stop)="stop()"
-        (next)="next()"
-        (previous)="previous()"
-      >
-      </player>
+    <h2>{{ artist.name }}</h2>
+    <div>
+        <div *ngIf="artist.abstract" class="abstract">
+            {{ artist.abstract }}
+        </div>
+        <div class="player">
+            <!-- <div class="artist_image"><img *ngIf="artist.image" [src]="artist.image"></div> -->
+            <player
+                *ngIf="deezer_id"
+                [playing]="isPlaying"
+                [cover]="cover"
+                [title]="title"
+                (play)="play()"
+                (pause)="pause()"
+                (stop)="stop()"
+                (next)="next()"
+                (previous)="previous()"
+            >
+            </player>
+        </div>
+        <div>
+            <label>Find {{ artist.name }} on </label>
+        </div>
+        <ul class="links">
+            <li>
+                <div *ngIf="artist.wikipedia_uri">
+                    <a target="_blank" [href]="artist.wikipedia_uri"
+                        ><img src="./assets/wiki.png"
+                    /></a>
+                </div>
+            </li>
+            <li>
+                <div *ngIf="artist.id" class="mbid">
+                    <a
+                        target="_blank"
+                        [href]="'http://musicbrainz.org/artist/' + artist.id"
+                        ><img src="./assets/musicbrainz.png"
+                    /></a>
+                </div>
+            </li>
+            <li>
+                <div *ngIf="artist.dbpedia_uri" class="mbid">
+                    <a target="_blank" [href]="artist.dbpedia_uri"
+                        ><img src="./assets/dbpedia.png"
+                    /></a>
+                </div>
+            </li>
+            <li>
+                <div *ngIf="artist.name" class="mbid">
+                    <a
+                        target="_blank"
+                        [href]="
+                            'https://www.youtube.com/results?search_query=' +
+                            artist.name
+                        "
+                        ><img src="./assets/youtube.png"
+                    /></a>
+                </div>
+            </li>
+        </ul>
     </div>
-    <div><label>Find {{ artist.name }} on </label></div>
-    <ul class="links">
-      <li><div *ngIf="artist.wikipedia_uri"><a target="_blank" [href]="artist.wikipedia_uri"><img src="./assets/wiki.png"></a></div></li>
-      <li><div *ngIf="artist.id" class="mbid"><a target="_blank" [href]="'http://musicbrainz.org/artist/'+artist.id"><img src="./assets/musicbrainz.png"></a></div></li>
-      <li><div *ngIf="artist.dbpedia_uri" class="mbid"><a target="_blank" [href]="artist.dbpedia_uri"><img src="./assets/dbpedia.png"></a></div></li>
-      <li><div *ngIf="artist.name" class="mbid"><a target="_blank" [href]="'https://www.youtube.com/results?search_query='+artist.name"><img src="./assets/youtube.png"></a></div></li>
-      <li><div *ngIf="artist.id" class="mbid"><a target="_blank" [href]="'https://www.bbc.co.uk/music/artists/'+artist.id"><img src="./assets/bbc.jpg"></a></div></li>
-    </ul>
-  </div>
-  <artist-graph *ngIf="showGraph()"
-    [setArtist]="artist">
-  </artist-graph>
-  <div *ngIf="showGrid()">
-    <category-links *ngIf="artist.associated_artists"
-      [setCategory]="artist.associated_artists"
-      [setArtist]="artist">
-    </category-links>
-    <category-links *ngFor="let category of artist.categories"
-      [setCategory]="category"
-      [setArtist]="artist">
-    </category-links>
-    <category-links *ngFor="let category of ab_categories"
-      [setCategory]="category"
-      [setArtist]="artist">
-    </category-links>
-    <category-links *ngIf="mood_category"
-      [setCategory]="mood_category"
-      [setArtist]="artist">
-    </category-links>
-    <category-links *ngIf="lastfm_category"
-      [setCategory]="lastfm_category"
-      [setArtist]="artist">
-    </category-links>
-  </div>
-  <!-- <youtube-videos *ngIf="videos"
+    <artist-graph *ngIf="showGraph()" [setArtist]="artist"> </artist-graph>
+    <div *ngIf="showGrid()">
+        <category-links
+            *ngIf="artist.associated_artists"
+            [setCategory]="artist.associated_artists"
+            [setArtist]="artist"
+        >
+        </category-links>
+        <category-links
+            *ngFor="let category of artist.categories"
+            [setCategory]="category"
+            [setArtist]="artist"
+        >
+        </category-links>
+        <category-links
+            *ngFor="let category of ab_categories"
+            [setCategory]="category"
+            [setArtist]="artist"
+        >
+        </category-links>
+        <category-links
+            *ngIf="mood_category"
+            [setCategory]="mood_category"
+            [setArtist]="artist"
+        >
+        </category-links>
+        <category-links
+            *ngIf="lastfm_category"
+            [setCategory]="lastfm_category"
+            [setArtist]="artist"
+        >
+        </category-links>
+    </div>
+    <!-- <youtube-videos *ngIf="videos"
     [setArtist]="artist"
     [setVideos]="videos">
   </youtube-videos> -->
-  <!-- <button (click)="goBack()">Back</button> -->
+    <!-- <button (click)="goBack()">Back</button> -->
 </div>
