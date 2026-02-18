@@ -4,7 +4,6 @@ import { Config } from '../objects/config';
 
 import { Artist } from '../objects/artist';
 import { ArtistService } from '../services/artist.service';
-import { getUserGuid } from '../objects/util';
 import { Spinner } from './spinner.component';
 
 @Component({
@@ -22,8 +21,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     if (!sessionStorage["musiclynx-layout"])
       sessionStorage["musiclynx-layout"] = "GRAPH";
-    if (!sessionStorage["user-guid"])
-      sessionStorage["user-guid"] = getUserGuid();
     this.artistService.getFeaturedArtists()
       .then(artists => {
         this.artists = artists;

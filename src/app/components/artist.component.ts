@@ -6,7 +6,6 @@ import { Artist }         from '../objects/artist';
 import { Category }       from '../objects/category';
 import { Track }          from '../objects/track';
 import { Config }         from '../objects/config';
-import { getUserGuid }    from '../objects/util';
 import { ArtistService }  from '../services/artist.service';
 import { PlayerService }  from '../services/player.service';
 import { DeezerService }  from '../services/deezer.service';
@@ -47,10 +46,6 @@ export class ArtistComponent implements OnInit {
       this.artist = new Artist();
       if (!sessionStorage["musiclynx-layout"])
         sessionStorage["musiclynx-layout"] = "GRAPH";
-      var guid = getUserGuid();
-      // console.log(guid);
-      if (!sessionStorage["user-guid"])
-        sessionStorage["user-guid"] = guid;
       this.layout = sessionStorage["musiclynx-layout"];
       if (params['id'] && params['name']) {
         this.artist.name = params['name'];

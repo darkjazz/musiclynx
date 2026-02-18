@@ -43,6 +43,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.8.0",
     "@angular/cli": "^6.2.4",
+    "@types/d3-scale": "^1.0.10",
     "@types/jasmine": "2.5.38",
     "@types/js-base64": "^2.1.5",
     "@types/node": "^6.0.42",
@@ -54,6 +55,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-remap-istanbul": "^0.2.1",
     "protractor": "~4.0.13",
+    "sass": "1.32",
     "ts-node": "1.2.1",
     "tslint": "^4.3.0",
     "typescript": "^2.9.2"
