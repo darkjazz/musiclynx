@@ -6,14 +6,23 @@ MusicLynx is a web platform for music discovery that collects information and re
 
 MusicLynx front-end is developed in [Angular2](https://angular.io), while the data server is implemented in [Express](https://expressjs.com).
 
-## Running MusicLynx
+## Running locally
 
-In order to start the Angular app serving on localhost:4200, install angular-cli, navigate in command line terminal to the project root directory and type:
+Start the API server first (see `musiclynx-server/README.md`). The UI expects it at `http://localhost:8080`.
+
+Then start the Angular dev server from the `musiclynx/` directory:
 ```
 ng serve
 ```
 
-The server component can be cloned from https://github.com/darkjazz/musiclynx-server
+The app is served at `http://localhost:4200`.
+
+**Note:** This project uses Angular 6 / webpack 3, which requires Node.js 18 or earlier with the legacy OpenSSL provider:
+```
+NODE_OPTIONS=--openssl-legacy-provider ng serve
+```
+
+The server component lives at `../musiclynx-server/`.
 
 ## Github pages deployment
 

@@ -5,10 +5,12 @@ import { Router, ActivatedRoute, Params, NavigationEnd } from '@angular/router';
 import { Artist }         from '../objects/artist';
 import { Category }       from '../objects/category';
 import { Track }          from '../objects/track';
+import { MbTrack }        from '../objects/mb-track';
 import { Config }         from '../objects/config';
 import { ArtistService }  from '../services/artist.service';
 import { PlayerService }  from '../services/player.service';
 import { DeezerService }  from '../services/deezer.service';
+import { TrackService }   from '../services/track.service';
 
 const MAX_ARTISTS = 30;
 
@@ -27,6 +29,7 @@ export class ArtistComponent implements OnInit {
   error: any;
   showSpinner: boolean;
   tracks: Array<any>;
+  mbTracks: MbTrack[];
   index:number;
   isPlaying: boolean = false;
   cover: string;
@@ -37,6 +40,7 @@ export class ArtistComponent implements OnInit {
     private artistService: ArtistService,
     private playerService: PlayerService,
     private deezerService: DeezerService,
+    private trackService: TrackService,
     private route: ActivatedRoute,
     private router: Router,
     private location: PlatformLocation) { }
@@ -88,9 +92,28 @@ export class ArtistComponent implements OnInit {
     this.showSpinner = false;
     this.artist = artist;
     if (artist.id) this.getAcousticbrainzCategories();
+    if (artist.id) this.getMbTracks();
     if (artist.name) this.getMoodplayLinks();
     if (artist.name) this.getDeezerID();
     this.storeInHistory(artist);
+  }
+
+  getMbTracks(): void {
+    this.trackService.getTracksByArtist(this.artist.id).then(tracks => {
+      if (tracks && tracks.length > 0) this.mbTracks = tracks;
+    }).catch(() => {});
+  }
+
+  goToTrack(track: MbTrack): void {
+    this.router.navigate(['/track', track.mbid, track.title]);
+  }
+
+  formatDuration(seconds: number): string {
+    if (!seconds) return '';
+    const total = Math.floor(seconds);
+    const m = Math.floor(total / 60);
+    const s = total % 60;
+    return `${m}:${s < 10 ? '0' + s : s}`;
   }
 
   checkArtistExists(artist: Artist, storage: string): boolean {
@@ -165,7 +188,7 @@ export class ArtistComponent implements OnInit {
   }
 
   showGraph(): boolean {
-    return this.layout == "GRAPH" && !!this.artist.dbpedia_uri;
+    return this.layout == "GRAPH" && !!this.artist.id;
   }
 
   showGrid(): boolean {

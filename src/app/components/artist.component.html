@@ -23,12 +23,22 @@
       <li><div *ngIf="artist.id" class="mbid"><a target="_blank" [href]="'http://musicbrainz.org/artist/'+artist.id"><img src="./assets/musicbrainz.png"></a></div></li>
       <li><div *ngIf="artist.dbpedia_uri" class="mbid"><a target="_blank" [href]="artist.dbpedia_uri"><img src="./assets/dbpedia.png"></a></div></li>
       <li><div *ngIf="artist.name" class="mbid"><a target="_blank" [href]="'https://www.youtube.com/results?search_query='+artist.name"><img src="./assets/youtube.png"></a></div></li>
-      <li><div *ngIf="artist.id" class="mbid"><a target="_blank" [href]="'https://www.bbc.co.uk/music/artists/'+artist.id"><img src="./assets/bbc.jpg"></a></div></li>
     </ul>
   </div>
   <artist-graph *ngIf="showGraph()"
     [setArtist]="artist">
   </artist-graph>
+
+  <div *ngIf="mbTracks" class="track-list">
+    <h3>Tracks in audio database</h3>
+    <ul>
+      <li *ngFor="let t of mbTracks" (click)="goToTrack(t)" class="track-item">
+        <span class="track-title">{{ t.title }}</span>
+        <span *ngIf="t.album_name" class="track-album"> — {{ t.album_name }}</span>
+        <span *ngIf="t.length_seconds" class="track-dur">{{ formatDuration(t.length_seconds) }}</span>
+      </li>
+    </ul>
+  </div>
   <div *ngIf="showGrid()">
     <category-links *ngIf="artist.associated_artists"
       [setCategory]="artist.associated_artists"

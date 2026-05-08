@@ -1,0 +1,94 @@
+.meta-block {
+  margin-bottom: 20px;
+}
+
+.meta-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.field-label {
+  font-size: 8pt;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #555;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+
+.field-value {
+  font-size: 11pt;
+  color: #bbb;
+}
+
+.field-value.title {
+  font-size: 13pt;
+  color: #e65100;
+  font-weight: 500;
+}
+
+.field-value.artist {
+  color: rgb(0, 120, 215);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.field-value.artist:hover {
+  text-decoration: underline;
+}
+
+.preview-block {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.preview-cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 3px;
+  object-fit: cover;
+  opacity: 0.85;
+}
+
+.play-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid #444;
+  background: transparent;
+  color: #bbb;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.play-btn:hover {
+  border-color: #aaa;
+  color: #fff;
+}
+
+.play-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.preview-label {
+  font-size: 8pt;
+  color: #444;
+  font-family: 'Nunito', sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.not-found {
+  margin-top: 40px;
+  color: #888;
+}

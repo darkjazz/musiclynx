@@ -1,12 +1,25 @@
 <spinner *ngIf="showSpinner"></spinner>
-<div id="search-results">
-  <h3 *ngIf="showNoResults">No results for '{{ term }}'</h3>
-  <h3 *ngIf="artists.length > 0">Search results for '{{ term }}'</h3>
-  <ul class="artists">
-    <li *ngFor="let artist of artists"
-      [class.selected]="artist === selectedArtist"
-      (click)="gotoDetail(artist)">
-      <span class="badge">{{artist.name}}</span> {{artist.disambiguation.substring(0, 73)}}
-    </li>
-  </ul>
+<div *ngIf="!showSpinner" id="search-results">
+  <p *ngIf="showNoResults" class="no-results">No results for '{{ term }}'</p>
+
+  <div *ngIf="artists.length > 0" class="result-section">
+    <h3 class="section-label">Artists</h3>
+    <ul class="result-list">
+      <li *ngFor="let artist of artists" (click)="gotoArtist(artist)" class="result-item">
+        <span class="result-name">{{ artist.name }}</span>
+        <span *ngIf="artist.disambiguation" class="result-meta">{{ artist.disambiguation.substring(0, 80) }}</span>
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="tracks.length > 0" class="result-section">
+    <h3 class="section-label">Tracks</h3>
+    <ul class="result-list">
+      <li *ngFor="let track of tracks" (click)="gotoTrack(track)" class="result-item">
+        <span class="result-name">{{ track.title }}</span>
+        <span class="result-meta">{{ track.artist }}<span *ngIf="track.album_name"> — {{ track.album_name }}</span></span>
+        <span *ngIf="track.length_seconds" class="result-dur">{{ formatDuration(track.length_seconds) }}</span>
+      </li>
+    </ul>
+  </div>
 </div>

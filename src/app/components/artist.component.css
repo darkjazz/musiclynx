@@ -101,3 +101,69 @@ button:disabled {
   opacity: 0.9;
   filter: alpha(opacity=90);
 }
+
+.track-list {
+  margin-top: 30px;
+  clear: both;
+}
+
+.track-list h3 {
+  color: #607D8B;
+  font-size: 10pt;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.track-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 340px;
+  overflow-y: auto;
+  border: 1px solid #333;
+  border-radius: 4pt;
+}
+
+.track-item {
+  padding: 7px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #222;
+  font-size: 9.5pt;
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  transition: background 0.15s;
+}
+
+.track-item:last-child {
+  border-bottom: none;
+}
+
+.track-item:hover {
+  background-color: #2a2a2a;
+  color: rgb(0, 120, 215);
+}
+
+.track-title {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-album {
+  color: #666;
+  font-size: 8.5pt;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.track-dur {
+  color: #555;
+  font-size: 8pt;
+  min-width: 36px;
+  text-align: right;
+}

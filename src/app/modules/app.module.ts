@@ -14,12 +14,14 @@ import { ArtistService }            from '../services/artist.service';
 import { MusicBrainzService }       from '../services/musicbrainz.service';
 import { DeezerService }            from '../services/deezer.service';
 import { PlayerService }            from '../services/player.service';
+import { TrackService }             from '../services/track.service';
 import { ArtistSearchComponent }    from '../components/artist-search.component';
 import { CategoryComponent }        from '../components/category.component';
 import { AudioComponent }           from '../components/audio.component';
 import { SearchResultsComponent }   from '../components/search-results.component';
 import { Spinner }                  from '../components/spinner.component';
 import { GraphComponent }           from '../components/graph.component';
+import { TrackGraphComponent }      from '../components/track-graph.component';
 import { Menu }                     from '../components/menu.component';
 import { InfoComponent }            from '../components/info.component';
 import { DemoComponent }            from '../components/demo.component';
@@ -48,6 +50,7 @@ import { HistoryComponent }         from '../components/history.component';
     SearchResultsComponent,
     Spinner,
     GraphComponent,
+    TrackGraphComponent,
     Menu,
     InfoComponent,
     DemoComponent,
@@ -59,7 +62,8 @@ import { HistoryComponent }         from '../components/history.component';
     ArtistService,
     MusicBrainzService,
     DeezerService,
-    PlayerService
+    PlayerService,
+    TrackService
   ],
   bootstrap:    [ AppComponent ],
   entryComponents: [ InfoComponent, DemoComponent, LayoutComponent, HistoryComponent ]

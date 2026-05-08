@@ -1,0 +1,28 @@
+<spinner *ngIf="showSpinner"></spinner>
+<div *ngIf="!showSpinner && track">
+  <div class="meta-block">
+    <div class="meta-row"><span class="field-label">Title</span><span class="field-value title">{{ track.title }}</span></div>
+    <div class="meta-row"><span class="field-label">Artist</span><span class="field-value artist" (click)="goToArtist()">{{ track.artist }}</span></div>
+    <div class="meta-row" *ngIf="track.album_name"><span class="field-label">Album</span><span class="field-value">{{ track.album_name }}</span></div>
+    <div class="meta-row" *ngIf="track.length_seconds"><span class="field-label">Duration</span><span class="field-value">{{ formatDuration(track.length_seconds) }}</span></div>
+    <div class="meta-row" *ngIf="track.bpm"><span class="field-label">Tempo</span><span class="field-value">{{ track.bpm }} BPM</span></div>
+    <div class="meta-row" *ngIf="track.key"><span class="field-label">Key</span><span class="field-value">{{ track.key }}</span></div>
+  </div>
+  <div *ngIf="previewCover" class="preview-block">
+    <img *ngIf="previewCover" [src]="previewCover" class="preview-cover">
+    <button class="play-btn" (click)="togglePlay()">
+      <svg *ngIf="!isPlaying" viewBox="0 0 24 24" class="play-icon">
+        <polygon points="5,3 19,12 5,21" fill="currentColor"/>
+      </svg>
+      <svg *ngIf="isPlaying" viewBox="0 0 24 24" class="play-icon">
+        <rect x="5" y="3" width="4" height="18" fill="currentColor"/>
+        <rect x="15" y="3" width="4" height="18" fill="currentColor"/>
+      </svg>
+    </button>
+    <span class="preview-label">30s preview</span>
+  </div>
+  <track-graph [mbid]="track.mbid"></track-graph>
+</div>
+<div *ngIf="!showSpinner && !track" class="not-found">
+  Track not found in database.
+</div>

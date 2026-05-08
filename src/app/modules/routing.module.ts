@@ -4,12 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent }   from '../components/dashboard.component';
 import { ArtistComponent }      from '../components/artist.component';
 import { SearchResultsComponent } from '../components/search-results.component';
+import { TrackComponent }       from '../components/track.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard',  component: DashboardComponent },
   { path: 'artist/:id/:name', component: ArtistComponent },
-  { path: 'search/:term', component: SearchResultsComponent }
+  { path: 'search/:term', component: SearchResultsComponent },
+  { path: 'track/:id/:title', component: TrackComponent }
 ];
 
 @NgModule({
@@ -19,4 +21,4 @@ const routes: Routes = [
 
 export class AppRoutingModule {}
 
-export const routedComponents = [DashboardComponent, ArtistComponent, SearchResultsComponent];
+export const routedComponents = [DashboardComponent, ArtistComponent, SearchResultsComponent, TrackComponent];

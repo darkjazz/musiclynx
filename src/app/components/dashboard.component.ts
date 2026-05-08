@@ -23,6 +23,10 @@ export class DashboardComponent implements OnInit {
       sessionStorage["musiclynx-layout"] = "GRAPH";
     this.artistService.getFeaturedArtists()
       .then(artists => {
+        for (let i = artists.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [artists[i], artists[j]] = [artists[j], artists[i]];
+        }
         this.artists = artists;
         this.showSpinner = false;
       });
