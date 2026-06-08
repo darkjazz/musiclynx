@@ -102,6 +102,36 @@ button:disabled {
   filter: alpha(opacity=90);
 }
 
+.community-section {
+  margin: 12px 0 16px 0;
+}
+
+.community-row,
+.genres-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.meta-label {
+  font-size: 7.5pt;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgb(220, 120, 0);
+  min-width: 120px;
+}
+
+.genre-chip {
+  background: #1a1a1a;
+  border: 1px solid rgb(0, 80, 160);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 8.5pt;
+  color: rgb(0, 120, 215);
+}
+
 .track-list {
   margin-top: 30px;
   clear: both;

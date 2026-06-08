@@ -1,0 +1,28 @@
+<spinner *ngIf="showSpinner"></spinner>
+<div *ngIf="!showSpinner" class="communities-page">
+  <div class="page-header">
+    <h2>MusicLynx Communities</h2>
+    <p class="subtitle">
+      312,821 artists grouped into 32 acoustic genre communities, derived from
+      DBpedia genre tags and audio feature clustering.
+    </p>
+    <a [href]="graphUrl" target="_blank" class="graph-link">
+      View genre graph
+    </a>
+  </div>
+
+  <div class="community-grid">
+    <div *ngFor="let c of communities" class="community-card"
+         [class.spoken-word]="c.content_type === 'spoken_word'">
+      <div class="card-header">
+        <span class="community-number">{{ c.id }}</span>
+        <span class="community-name">{{ c.name }}</span>
+        <span *ngIf="c.content_type === 'spoken_word'" class="content-badge">spoken word</span>
+      </div>
+      <div class="artist-count">{{ c.artist_count | number }} artists</div>
+      <div class="genre-chips">
+        <span *ngFor="let g of c.top_genres" class="genre-chip">{{ g }}</span>
+      </div>
+    </div>
+  </div>
+</div>

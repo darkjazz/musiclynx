@@ -14,5 +14,6 @@ export const Config = {
   artist: "/artist",
   audio: "/audio",
   track: "/track",
+  community: "/community",
   history_separator: "|"
 }

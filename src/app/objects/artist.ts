@@ -15,4 +15,6 @@ export class Artist {
   entity_id: string;
   categories: Category[];
   associated_artists: Category;
+  community: { id: number; name: string; content_type: string; source: string; confidence: number | null };
+  genres: string[];
 }

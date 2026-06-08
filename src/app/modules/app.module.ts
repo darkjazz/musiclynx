@@ -27,6 +27,7 @@ import { InfoComponent }            from '../components/info.component';
 import { DemoComponent }            from '../components/demo.component';
 import { LayoutComponent }          from '../components/layout.component';
 import { HistoryComponent }         from '../components/history.component';
+import { CommunityService }         from '../services/community.service';
 
 @NgModule({
   imports:      [
@@ -63,7 +64,8 @@ import { HistoryComponent }         from '../components/history.component';
     MusicBrainzService,
     DeezerService,
     PlayerService,
-    TrackService
+    TrackService,
+    CommunityService
   ],
   bootstrap:    [ AppComponent ],
   entryComponents: [ InfoComponent, DemoComponent, LayoutComponent, HistoryComponent ]

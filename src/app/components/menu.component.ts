@@ -1,4 +1,5 @@
 import { Component, ViewChild, Injectable, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatSidenav }       from '@angular/material/sidenav';
 import { MatButton }        from '@angular/material/button';
 import { Overlay, OverlayConfig } from '@angular/cdk/overlay';
@@ -18,6 +19,7 @@ interface MenuOverlayConfig {
 
 const ITEMS = [
   { "text": "about", "icon": "info" },
+  { "text": "communities", "icon": "category" },
   { "text": "layout", "icon": "group_work" },
   { "text": "demo", "icon": "movie" },
   { "text": "history", "icon": "history" },
@@ -42,7 +44,7 @@ export class Menu {
   items: MenuItem[];
   graphOn: boolean = true;
   gridOn: boolean = false;
-  constructor(private overlay: Overlay) {
+  constructor(private overlay: Overlay, private router: Router) {
     this.items = new Array<MenuItem>();
     ITEMS.forEach(item => {
       this.items.push(item as MenuItem)
@@ -53,6 +55,8 @@ export class Menu {
     this.close();
     if (text == "github")
       this.gotoGithub();
+    else if (text == "communities")
+      this.router.navigate(['/communities']);
     else
       this.showOverlay(text);
   }

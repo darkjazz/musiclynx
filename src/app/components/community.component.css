@@ -1,0 +1,109 @@
+.communities-page {
+  padding: 10px 0;
+}
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.page-header h2 {
+  margin: 0 0 8px 0;
+}
+
+.subtitle {
+  font-size: 9pt;
+  color: #607D8B;
+  margin: 0 0 14px 0;
+  max-width: 560px;
+}
+
+.graph-link {
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgb(220, 120, 0);
+  text-decoration: none;
+  border: 1px solid rgb(220, 120, 0);
+  border-radius: 12px;
+  padding: 4px 12px;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.graph-link:hover {
+  opacity: 1;
+}
+
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.community-card {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 6px;
+  padding: 14px;
+  transition: border-color 0.15s;
+}
+
+.community-card:hover {
+  border-color: #444;
+}
+
+.community-card.spoken-word {
+  border-color: #2a1a00;
+}
+
+.card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.community-number {
+  font-size: 8pt;
+  color: #444;
+  min-width: 18px;
+}
+
+.community-name {
+  font-size: 10pt;
+  color: rgb(0, 120, 215);
+  font-weight: bold;
+  flex: 1;
+}
+
+.content-badge {
+  font-size: 7pt;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgb(220, 120, 0);
+  border: 1px solid rgb(220, 120, 0);
+  border-radius: 8px;
+  padding: 1px 7px;
+  opacity: 0.8;
+}
+
+.artist-count {
+  font-size: 8pt;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.genre-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.genre-chip {
+  background: #1a1a1a;
+  border: 1px solid rgb(0, 80, 160);
+  border-radius: 10px;
+  padding: 2px 9px;
+  font-size: 8pt;
+  color: rgb(0, 120, 215);
+}

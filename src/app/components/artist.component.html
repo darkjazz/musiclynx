@@ -17,6 +17,16 @@
       >
       </player>
     </div>
+    <div *ngIf="artist.community" class="community-section">
+      <div class="community-row">
+        <span class="meta-label">MusicLynx Community</span>
+        <span class="genre-chip">{{ artist.community.name }}</span>
+      </div>
+      <div *ngIf="artist.genres?.length" class="genres-row">
+        <span class="meta-label">Inferred genres</span>
+        <span *ngFor="let g of artist.genres" class="genre-chip">{{ g }}</span>
+      </div>
+    </div>
     <div><label>Find {{ artist.name }} on </label></div>
     <ul class="links">
       <li><div *ngIf="artist.wikipedia_uri"><a target="_blank" [href]="artist.wikipedia_uri"><img src="./assets/wiki.png"></a></div></li>
@@ -25,6 +35,7 @@
       <li><div *ngIf="artist.name" class="mbid"><a target="_blank" [href]="'https://www.youtube.com/results?search_query='+artist.name"><img src="./assets/youtube.png"></a></div></li>
     </ul>
   </div>
+
   <artist-graph *ngIf="showGraph()"
     [setArtist]="artist">
   </artist-graph>
